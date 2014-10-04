@@ -158,6 +158,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		 * The fragment argument representing the section number for this
 		 * fragment.
 		 */
+		
 		private static final String ARG_SECTION_NUMBER = "section_number";
 
 		/**
@@ -177,7 +178,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
+			View rootView = inflater.inflate(R.layout.mypoems, container,
 					false);
 			return rootView;
 		}
