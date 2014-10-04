@@ -126,7 +126,12 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a PlaceholderFragment (defined as a static inner class
 			// below).
-			return PlaceholderFragment.newInstance(position + 1);
+			if (position == 0) {
+				return PlaceholderFragment.newInstance(position + 1);
+			}
+			else {
+				return PlaceholderFragment2.newInstance(position + 1);
+			}
 		}
 
 		@Override
@@ -179,6 +184,41 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.mypoems, container,
+					false);
+			return rootView;
+		}
+	}
+	
+	
+	/**
+	 * A second placeholder fragment containing a simple view.
+	 */
+	public static class PlaceholderFragment2 extends Fragment {
+		/**
+		 * The fragment argument representing the section number for this
+		 * fragment.
+		 */
+		
+		private static final String ARG_SECTION_NUMBER = "section_number";
+
+		/**
+		 * Returns a new instance of this fragment for the given section number.
+		 */
+		public static PlaceholderFragment2 newInstance(int sectionNumber) {
+			PlaceholderFragment2 fragment = new PlaceholderFragment2();
+			Bundle args = new Bundle();
+			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+			fragment.setArguments(args);
+			return fragment;
+		}
+
+		public PlaceholderFragment2() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.mypoems2, container,
 					false);
 			return rootView;
 		}
