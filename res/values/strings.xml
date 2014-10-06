@@ -8,5 +8,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_record_poem">RecordPoem</string>
+    <string name="title_activity_profile">Profile</string>
 
 </resources>

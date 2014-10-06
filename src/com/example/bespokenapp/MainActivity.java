@@ -88,12 +88,18 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
-	        case R.id.action_test:
+	        case R.id.profile:
+	        	goToProfilePage();
+	            return true;
+	         case R.id.search:
+		        goToRecordPage();
+		        return true;
+	        case R.id.home:
+		        goToRecordPage();
+		        return true;
+	        case R.id.record:
 	        	goToRecordPage();
-	            return true;
-	        case R.id.action_settings:
-	            //here too!
-	            return true;
+		        return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -104,6 +110,20 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		 startActivity(intent);
 	}
 	
+	public void goToProfilePage(){
+		Intent intent = new Intent(this, Profile.class);
+		 startActivity(intent);
+	}
+	/*
+	public void goToRecordPage(){
+		Intent intent = new Intent(this, RecordPoem.class);
+		 startActivity(intent);
+	}
+	public void goToRecordPage(){
+		Intent intent = new Intent(this, RecordPoem.class);
+		 startActivity(intent);
+	}
+	*/
 
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
