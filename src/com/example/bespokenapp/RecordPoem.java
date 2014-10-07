@@ -1,3 +1,7 @@
+/*
+ * name: Lauren Naylor
+ */
+
 package com.example.bespokenapp;
 
 import android.app.Activity;
