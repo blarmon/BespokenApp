@@ -29,14 +29,25 @@ public final class R {
         public static final int search7=0x7f020004;
     }
     public static final class id {
-        public static final int action_settings=0x7f080003;
-        public static final int home=0x7f080005;
+        public static final int action_settings=0x7f08000e;
+        public static final int author=0x7f080009;
+        public static final int deleteButton=0x7f08000c;
+        public static final int home=0x7f080010;
+        public static final int linear1=0x7f080001;
+        public static final int linear2=0x7f080005;
+        public static final int micImage=0x7f080002;
         public static final int pager=0x7f080000;
-        public static final int profile=0x7f080004;
-        public static final int record=0x7f080007;
-        public static final int search=0x7f080006;
-        public static final int section_label=0x7f080001;
-        public static final int testText=0x7f080002;
+        public static final int poemName=0x7f080006;
+        public static final int postButton=0x7f08000d;
+        public static final int profile=0x7f08000f;
+        public static final int record=0x7f080012;
+        public static final int search=0x7f080011;
+        public static final int section_label=0x7f080007;
+        public static final int startButton=0x7f08000a;
+        public static final int stop=0x7f080003;
+        public static final int stopButton=0x7f08000b;
+        public static final int testText=0x7f080008;
+        public static final int timer=0x7f080004;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -45,6 +56,7 @@ public final class R {
         public static final int fragment_main=0x7f030003;
         public static final int mypoems=0x7f030004;
         public static final int mypoems2=0x7f030005;
+        public static final int playback=0x7f030006;
     }
     public static final class menu {
         public static final int main=0x7f070000;
