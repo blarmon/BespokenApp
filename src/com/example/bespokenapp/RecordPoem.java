@@ -7,6 +7,7 @@ package com.example.bespokenapp;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 
@@ -58,9 +60,12 @@ public class RecordPoem extends Activity {
 			@Override
 			public void onClick(View v) {
 				stop(v);
+				
+				
 				LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 				v = layoutInflater.inflate(R.layout.playback, null);
 				final PopupWindow popupWindow = new PopupWindow(v, 750, 1200);
+				
 				popupWindow.showAsDropDown(v, 10, 10);
 
 				final Button playBack = (Button) v.findViewById(R.id.startButton);

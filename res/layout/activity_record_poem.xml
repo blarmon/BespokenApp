@@ -13,21 +13,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal" >
+        android:orientation="vertical"
+        android:gravity = "center" >
 
         <ImageButton
             android:id="@+id/micImage"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
+            android:background="#10000000"
             android:src="@android:drawable/presence_audio_online" />
 
         <Button
             android:id="@+id/stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:enabled="false"
             android:text="Stop"
             android:visibility="gone" />
@@ -51,7 +51,7 @@
         android:orientation="horizontal" >
 
         <EditText
-            android:id="@+id/poemName"
+            android:id="@+id/poemName1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
