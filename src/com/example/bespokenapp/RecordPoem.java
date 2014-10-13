@@ -7,16 +7,17 @@ package com.example.bespokenapp;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -36,14 +37,7 @@ public class RecordPoem extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_record_poem);
 		
-		myRecorder = new MediaRecorder();
-		myRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-		myRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-		myRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-
-		outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/poem.3gpp";
-
-		myRecorder.setOutputFile(outputFile);
+		
 
 		startBtn = (ImageButton)findViewById(R.id.micImage);
 		startBtn.setOnClickListener(new OnClickListener() {
@@ -64,9 +58,15 @@ public class RecordPoem extends Activity {
 				
 				LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 				v = layoutInflater.inflate(R.layout.playback, null);
-				final PopupWindow popupWindow = new PopupWindow(v, 750, 1200);
+				final PopupWindow popupWindow = new PopupWindow(v, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 				
-				popupWindow.showAsDropDown(v, 10, 10);
+				popupWindow.showAtLocation(v, Gravity.TOP, 0, 0);
+				EditText poemName = (EditText)v.findViewById(R.id.poemName);
+				
+				popupWindow.setFocusable(true);
+				popupWindow.update();
+				
+				
 
 				final Button playBack = (Button) v.findViewById(R.id.startButton);
 				playBack.setOnClickListener(
@@ -90,6 +90,8 @@ public class RecordPoem extends Activity {
 						new View.OnClickListener() {
 							public void onClick(View v) {
 								popupWindow.dismiss();
+								startBtn.setVisibility(0);
+								stopBtn.setVisibility(4);
 								
 							}
 						});
@@ -98,7 +100,14 @@ public class RecordPoem extends Activity {
 	}
 
 	public void start(View view) {
+		myRecorder = new MediaRecorder();
+		myRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+		myRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+		myRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
 
+		outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/poem.3gpp";
+
+		myRecorder.setOutputFile(outputFile);
 		try {
 			myRecorder.prepare();
 			myRecorder.start();
