@@ -123,6 +123,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		intent.putExtra("url", profileURL);
 		startActivity(intent);
 	}
+	public void goToPoemPage(String poemURL){
+		Intent intent = new Intent(this, Poem.class);
+		intent.putExtra("url", poemURL);
+		startActivity(intent);
+	}
 	/*
 	public void goToRecordPage(){
 		Intent intent = new Intent(this, RecordPoem.class);
@@ -289,7 +294,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 					return false;
 				}
 				else if (temp.contains("poem")) {
-					//goToPoemPage(url);
+					((MainActivity)getActivity()).goToPoemPage(url);
 					return false;
 				}
 				else {
@@ -298,8 +303,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			}
 		}
 	}
-
-
 
 	/*
 	 * This method enables back-button functionality for the WebViews.  

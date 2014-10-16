@@ -7,16 +7,16 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class Profile extends Activity {
+public class Poem extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_profile);
+		setContentView(R.layout.activity_poem);
 		
 		String address = getIntent().getExtras().getString("url");
 		WebView myWebView;
-		myWebView = (WebView) findViewById(R.id.profileWebView);
+		myWebView = (WebView) findViewById(R.id.poemWebView);
 		myWebView.loadUrl(address);
 		myWebView.setWebViewClient(new WebViewClient()); 
 

@@ -34,6 +34,11 @@
             android:name=".Profile"
             android:label="@string/title_activity_profile" >
         </activity>
+        <activity
+            android:name=".Poem"
+            android:label="@string/title_activity_poem" >
+        </activity>
+        
     </application>
 
 </manifest>
