@@ -260,11 +260,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 				List<String> temp = Uri.parse(url).getPathSegments();
 				if (temp.contains("user")) {
 					((MainActivity)getActivity()).goToProfilePage(url);
-					return true;
+					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 				else if (temp.contains("poem")) {
 					((MainActivity)getActivity()).goToPoemPage(url);
-					return true;
+					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 				else {
 					return false;
@@ -325,11 +325,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 				List<String> temp = Uri.parse(url).getPathSegments();
 				if (temp.contains("user")) {
 					((MainActivity)getActivity()).goToProfilePage(url);
-					return false;
+					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 				else if (temp.contains("poem")) {
 					((MainActivity)getActivity()).goToPoemPage(url);
-					return false;
+					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 				else {
 					return false;
