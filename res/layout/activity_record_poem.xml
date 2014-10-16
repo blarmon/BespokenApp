@@ -42,23 +42,7 @@
         android:layout_marginTop="20dp"
         android:text="timer" />
 
-    <LinearLayout
-        android:id="@+id/linear2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/timer"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal" >
-
-        <EditText
-            android:id="@+id/poemName1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Enter Name of Recording" />
-
-       
-    </LinearLayout>
+   
 
 
 </RelativeLayout>

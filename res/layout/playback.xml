@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Name of Poem"/>
+        android:hint="Enter Name of Poem"/>
     <TextView
         android:id="@+id/author"
         android:layout_width="wrap_content"
