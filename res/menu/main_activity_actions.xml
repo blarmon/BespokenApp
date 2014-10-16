@@ -3,17 +3,17 @@
     <item android:id="@+id/profile"
           android:icon="@drawable/male66"
           android:title="test button"
-          android:showAsAction="ifRoom" />
+          android:showAsAction="never" />
      <item android:id="@+id/home"
           android:icon="@drawable/homeedited"
           android:title="home"
-          android:showAsAction="ifRoom" />
+          android:showAsAction="never" />
       <item android:id="@+id/search"
           android:icon="@drawable/search7"
           android:title="search"
-          android:showAsAction="ifRoom" />
+          android:showAsAction="never" />
        <item android:id="@+id/record"
           android:icon="@drawable/microphone21"
           android:title="record"
-          android:showAsAction="ifRoom" />
+          android:showAsAction="never" />
 </menu>
