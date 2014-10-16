@@ -275,34 +275,30 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		}
 		/*
 		 * This method gives us custom control over what happens with the links we click.
+		 * It's still problematic for going back to the main activity (it stays on the same page)
 		 */
 		private class MyWebViewClient extends WebViewClient {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-				if (Uri.parse(url).getHost() == "appspot.com") {
-					//This determines whether the user has clicked on either a poem or profile page, 
-					//and then sends them to the appropriate activity.
-					List<String> temp = Uri.parse(url).getPathSegments();
-					if (temp.contains("user")) {
-						((MainActivity)getActivity()).goToProfilePage(url);
-					}
-					else if (temp.contains("poem")) {
-						//goToPoemPage(url);
-					}
-					else {
-						return false;
-					}
+				//This determines whether the user has clicked on either a poem or profile page, 
+				//and then sends them to the appropriate activity.
+				List<String> temp = Uri.parse(url).getPathSegments();
+				if (temp.contains("user")) {
+					((MainActivity)getActivity()).goToProfilePage(url);
+					return false;
 				}
-
-				// Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs
-				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-				startActivity(intent);
-				return true;
+				else if (temp.contains("poem")) {
+					//goToPoemPage(url);
+					return false;
+				}
+				else {
+					return false;
+				}
 			}
 		}
 	}
-	
+
 
 
 	/*
