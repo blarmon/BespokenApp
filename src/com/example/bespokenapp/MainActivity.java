@@ -2,6 +2,7 @@
 
 package com.example.bespokenapp;
 
+import java.util.List;
 import java.util.Locale;
 
 import android.app.ActionBar;
@@ -10,16 +11,19 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
@@ -36,6 +40,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
+
+	static WebView myWebView1, myWebView2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +64,12 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
 		mViewPager
-				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-					@Override
-					public void onPageSelected(int position) {
-						actionBar.setSelectedNavigationItem(position);
-					}
-				});
+		.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+			@Override
+			public void onPageSelected(int position) {
+				actionBar.setSelectedNavigationItem(position);
+			}
+		});
 
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -79,42 +85,43 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		
+
 		// Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.main_activity_actions, menu);
-	    return super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_activity_actions, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.profile:
-	        	goToProfilePage();
-	            return true;
-	         case R.id.search:
-		        goToRecordPage();
-		        return true;
-	        case R.id.home:
-		        goToRecordPage();
-		        return true;
-	        case R.id.record:
-	        	goToRecordPage();
-		        return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.profile:
+			goToProfilePage("http://bespokenapp.appspot.com/my-profile");
+			return true;
+		case R.id.search:
+			goToRecordPage();
+			return true;
+		case R.id.home:
+			goToRecordPage();
+			return true;
+		case R.id.record:
+			goToRecordPage();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
-	
+
 	public void goToRecordPage(){
 		Intent intent = new Intent(this, RecordPoem.class);
-		 startActivity(intent);
+		startActivity(intent);
 	}
-	
-	public void goToProfilePage(){
+
+	public void goToProfilePage(String profileURL){
 		Intent intent = new Intent(this, Profile.class);
-		 startActivity(intent);
+		intent.putExtra("url", profileURL);
+		startActivity(intent);
 	}
 	/*
 	public void goToRecordPage(){
@@ -125,7 +132,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		Intent intent = new Intent(this, RecordPoem.class);
 		 startActivity(intent);
 	}
-	*/
+	 */
 
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
@@ -164,13 +171,13 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 				return PlaceholderFragment.newInstance(position + 1);
 			}
 			else {
-				return PlaceholderFragment2.newInstance(position + 1);
+				return PlaceholderFragment2.newInstance(position + 2);
 			}
 		}
 
 		@Override
 		public int getCount() {
-			// Show 3 total pages.
+			// Show 2 total pages.
 			return 2;
 		}
 
@@ -197,7 +204,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		 * The fragment argument representing the section number for this
 		 * fragment.
 		 */
-		
+
 		private static final String ARG_SECTION_NUMBER = "section_number";
 
 		/**
@@ -219,11 +226,16 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.mypoems, container,
 					false);
+
+			myWebView1 = (WebView) rootView.findViewById(R.id.webview1);
+			myWebView1.loadUrl("http://www.amazon.com");
+			myWebView1.setWebViewClient(new WebViewClient());
+
 			return rootView;
 		}
 	}
-	
-	
+
+
 	/**
 	 * A second placeholder fragment containing a simple view.
 	 */
@@ -232,7 +244,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		 * The fragment argument representing the section number for this
 		 * fragment.
 		 */
-		
+
 		private static final String ARG_SECTION_NUMBER = "section_number";
 
 		/**
@@ -254,8 +266,61 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.mypoems2, container,
 					false);
+
+			myWebView2 = (WebView) rootView.findViewById(R.id.webview2);
+			myWebView2.loadUrl("http://bespokenapp.appspot.com");
+			myWebView2.setWebViewClient(new MyWebViewClient());
+
 			return rootView;
 		}
-	}
+		/*
+		 * This method gives us custom control over what happens with the links we click.
+		 */
+		private class MyWebViewClient extends WebViewClient {
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
+				if (Uri.parse(url).getHost() == "appspot.com") {
+					//This determines whether the user has clicked on either a poem or profile page, 
+					//and then sends them to the appropriate activity.
+					List<String> temp = Uri.parse(url).getPathSegments();
+					if (temp.contains("user")) {
+						goToProfilePage(url);
+					}
+					else if (temp.contains("poem")) {
+						//goToPoemPage(url);
+					}
+					else {
+						return false;
+					}
+				}
+
+				// Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+				startActivity(intent);
+				return true;
+			}
+		}
+	}
+	
+
+
+	/*
+	 * This method enables back-button functionality for the WebViews.  
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// Check if the key event was the Back button and if there's history
+		if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView1.canGoBack()) {
+			myWebView1.goBack();
+			return true;
+		}
+		else if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView2.canGoBack()) {
+			myWebView2.goBack();
+			return true;
+		}
+		// If it wasn't the Back key or there's no web page history, bubble up to the default
+		// system behavior (probably exit the activity)
+		return super.onKeyDown(keyCode, event);
+	}
 }

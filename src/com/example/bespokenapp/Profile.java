@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class Profile extends Activity {
 
@@ -11,6 +13,13 @@ public class Profile extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
+		
+		String address = getIntent().getExtras().getString("url");
+		WebView myWebView;
+		myWebView = (WebView) findViewById(R.id.profileWebView);
+		myWebView.loadUrl(address);
+		myWebView.setWebViewClient(new WebViewClient()); 
+
 	}
 
 	@Override
