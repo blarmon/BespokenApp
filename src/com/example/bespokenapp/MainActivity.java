@@ -100,7 +100,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			goToProfilePage("http://bespokenapp.appspot.com/my-profile");
 			return true;
 		case R.id.search:
-			goToRecordPage();
+			goToSearchPage();
 			return true;
 		case R.id.home:
 			goToRecordPage();
@@ -115,6 +115,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 	public void goToRecordPage(){
 		Intent intent = new Intent(this, RecordPoem.class);
+		startActivity(intent);
+	}
+	
+	public void goToSearchPage() {
+		Intent intent = new Intent(this, SearchPage.class);
 		startActivity(intent);
 	}
 
