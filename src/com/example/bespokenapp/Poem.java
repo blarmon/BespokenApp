@@ -5,6 +5,7 @@
 package com.example.bespokenapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,15 +34,49 @@ public class Poem extends Activity {
 		return true;
 	}
 
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.profile:
+			goToProfilePage("http://bespokenapp.appspot.com/my-profile");
 			return true;
+		case R.id.search:
+			goToSearchPage();
+			return true;
+		case R.id.home:
+			goToHomePage();
+			return true;
+		case R.id.record:
+			goToRecordPage();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
+	}
+
+	public void goToRecordPage(){
+		Intent intent = new Intent(this, RecordPoem.class);
+		startActivity(intent);
+	}
+	
+	public void goToSearchPage() {
+		Intent intent = new Intent(this, SearchPage.class);
+		startActivity(intent);
+	}
+
+	public void goToHomePage(){
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+	}
+	
+	public void goToProfilePage(String profileURL){
+		Intent intent = new Intent(this, Profile.class);
+		intent.putExtra("url", profileURL);
+		startActivity(intent);
+	}
+	public void goToPoemPage(String poemURL){
+		Intent intent = new Intent(this, Poem.class);
+		intent.putExtra("url", poemURL);
+		startActivity(intent);
 	}
 }

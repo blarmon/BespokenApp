@@ -106,7 +106,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			goToSearchPage();
 			return true;
 		case R.id.home:
-			goToRecordPage();
+			goToHomePage();
 			return true;
 		case R.id.record:
 			goToRecordPage();
@@ -126,6 +126,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		startActivity(intent);
 	}
 
+	public void goToHomePage(){
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+	}
+	
 	public void goToProfilePage(String profileURL){
 		Intent intent = new Intent(this, Profile.class);
 		intent.putExtra("url", profileURL);
