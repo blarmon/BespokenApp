@@ -238,10 +238,35 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 					false);
 
 			myWebView1 = (WebView) rootView.findViewById(R.id.webview1);
-			myWebView1.loadUrl("http://www.amazon.com");
-			myWebView1.setWebViewClient(new WebViewClient());
+			myWebView1.loadUrl("http://bespokenapp.appspot.com");
+			myWebView1.setWebViewClient(new MyWebViewClient());
 
 			return rootView;
+		}
+		
+		/*
+		 * This method gives us custom control over what happens with the links we click.
+		 * It's still problematic for going back to the main activity (it stays on the same page)
+		 */
+		private class MyWebViewClient extends WebViewClient {
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+				//This determines whether the user has clicked on either a poem or profile page, 
+				//and then sends them to the appropriate activity.
+				List<String> temp = Uri.parse(url).getPathSegments();
+				if (temp.contains("user")) {
+					((MainActivity)getActivity()).goToProfilePage(url);
+					return true;
+				}
+				else if (temp.contains("poem")) {
+					((MainActivity)getActivity()).goToPoemPage(url);
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
 		}
 	}
 
@@ -278,11 +303,12 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 					false);
 
 			myWebView2 = (WebView) rootView.findViewById(R.id.webview2);
-			myWebView2.loadUrl("http://bespokenapp.appspot.com");
+			myWebView2.loadUrl("http://bespokenapp.appspot.com/top-poems");
 			myWebView2.setWebViewClient(new MyWebViewClient());
 
 			return rootView;
 		}
+		
 		/*
 		 * This method gives us custom control over what happens with the links we click.
 		 * It's still problematic for going back to the main activity (it stays on the same page)
