@@ -1,5 +1,6 @@
 /*
  * name: Lauren Naylor
+ * This is the page the user will use to record their poetry
  */
 
 package com.example.bespokenapp;
@@ -24,7 +25,7 @@ import android.widget.ImageButton;
 import android.widget.PopupWindow;
 
 public class RecordPoem extends Activity {
-	
+
 	private MediaRecorder myRecorder;
 	private MediaPlayer myPlayer;
 	private String outputFile = null;
@@ -36,44 +37,38 @@ public class RecordPoem extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_record_poem);
-		
-		
 
 		startBtn = (ImageButton)findViewById(R.id.micImage);
 		startBtn.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				start(v);
+				start(v);//starts recording
 			}
 		});
+
 
 		stopBtn = (Button) findViewById(R.id.stop);
 		stopBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				stop(v);
-				
-				
+				stop(v);//stops recording
+				//then opens a popup window for playback
 				LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 				v = layoutInflater.inflate(R.layout.playback, null);
 				final PopupWindow popupWindow = new PopupWindow(v, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-				
+
 				popupWindow.showAtLocation(v, Gravity.TOP, 0, 0);
 				EditText poemName = (EditText)v.findViewById(R.id.poemName);
-				
+
 				popupWindow.setFocusable(true);
 				popupWindow.update();
-				
-				
 
 				final Button playBack = (Button) v.findViewById(R.id.startButton);
 				playBack.setOnClickListener(
 						new View.OnClickListener() {
 							public void onClick(View v) {
-								playback(v);
-
+								playback(v);//starts playback
 							}
 						});
 
@@ -81,25 +76,25 @@ public class RecordPoem extends Activity {
 				stopPlayBack.setOnClickListener(
 						new View.OnClickListener() {
 							public void onClick(View v) {
-								stopPlayback(v);
+								stopPlayback(v);//stops playback
 							}
 						});
-				
+
 				final Button delete = (Button) v.findViewById(R.id.deleteButton);
 				delete.setOnClickListener(
 						new View.OnClickListener() {
-							public void onClick(View v) {
+							public void onClick(View v) {//closes the popup window so that the user can record a new poem, which will overwrite their last recording
 								popupWindow.dismiss();
 								startBtn.setVisibility(0);
 								stopBtn.setVisibility(4);
-								
+
 							}
 						});
 			}
 		});
 	}
 
-	public void start(View view) {
+	public void start(View view) {//starts recording and changes the mic button to the stop button
 		myRecorder = new MediaRecorder();
 		myRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		myRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -121,7 +116,7 @@ public class RecordPoem extends Activity {
 		stopBtn.setVisibility(0);
 	}
 
-	public void stop(View view) {
+	public void stop(View view) {//stops recording
 
 		try {
 
@@ -136,7 +131,7 @@ public class RecordPoem extends Activity {
 		}
 	}
 
-	public void playback(View view) {
+	public void playback(View view) {//starts playback
 		try {
 
 			myPlayer = new MediaPlayer();
@@ -149,7 +144,7 @@ public class RecordPoem extends Activity {
 
 	}
 
-	public void stopPlayback(View view) {
+	public void stopPlayback(View view) {//stops playback
 		try {
 			if (myPlayer != null) {
 				myPlayer.stop();
@@ -161,7 +156,7 @@ public class RecordPoem extends Activity {
 			e.printStackTrace();
 		}
 	}
-	
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
