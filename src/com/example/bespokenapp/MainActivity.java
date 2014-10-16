@@ -1,4 +1,7 @@
-//Hey, why aren't there more comments in here ....
+/*
+ * This is the home page - it brings up the login screen and has tabs at the top for "my feed" and "top poems"
+ * The other pages can be accessed through the action bar at the top
+ */
 
 package com.example.bespokenapp;
 

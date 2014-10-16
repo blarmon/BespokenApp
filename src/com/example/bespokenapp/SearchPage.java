@@ -1,3 +1,7 @@
+/*
+ * This will be the search page, where users can search for poems
+ */
+
 package com.example.bespokenapp;
 
 import android.app.Activity;

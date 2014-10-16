@@ -1,3 +1,7 @@
+/*
+ * This page will be called when the user selects a profile (either their own or another person's)
+ */
+
 package com.example.bespokenapp;
 
 import android.app.Activity;

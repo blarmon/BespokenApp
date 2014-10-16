@@ -1,3 +1,7 @@
+/*
+ * This is the page that will be called when the user selects a poem
+ */
+
 package com.example.bespokenapp;
 
 import android.app.Activity;
