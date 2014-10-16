@@ -285,7 +285,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 					//and then sends them to the appropriate activity.
 					List<String> temp = Uri.parse(url).getPathSegments();
 					if (temp.contains("user")) {
-						goToProfilePage(url);
+						((MainActivity)getActivity()).goToProfilePage(url);
 					}
 					else if (temp.contains("poem")) {
 						//goToPoemPage(url);
