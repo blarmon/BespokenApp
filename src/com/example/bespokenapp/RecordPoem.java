@@ -7,12 +7,16 @@ package com.example.bespokenapp;
 
 import java.io.IOException;
 
+
+
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 public class RecordPoem extends Activity {
 
@@ -32,18 +37,34 @@ public class RecordPoem extends Activity {
 	private String outputFile = null;
 	private ImageButton startBtn;
 	private Button stopBtn;
-	private Button deleteBtn;
+	private TextView timerValue;
+	private TextView timerValue2;
+	long timerLength;
+
+	private long startTime = 0L;
+
+	private Handler customHandler = new Handler();
+
+	long timeInMilliseconds = 0L;
+	long timeSwapBuff = 0L;
+	long updatedTime = 0L;
+
+	long poemLength = 0L;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_record_poem);
+		
+		timerValue = (TextView) findViewById(R.id.timerValue);
 
 		startBtn = (ImageButton)findViewById(R.id.micImage);
 		startBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				start(v);//starts recording
+				startTime = SystemClock.uptimeMillis();
+				customHandler.postDelayed(updateTimerThread, 0);
 			}
 		});
 
@@ -54,6 +75,11 @@ public class RecordPoem extends Activity {
 			@Override
 			public void onClick(View v) {
 				stop(v);//stops recording
+				
+				customHandler.removeCallbacks(updateTimerThread);
+				timerLength = timeInMilliseconds;
+				timerValue.setText("00:00");
+				
 				//then opens a popup window for playback
 				LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 				v = layoutInflater.inflate(R.layout.playback, null);
@@ -64,12 +90,15 @@ public class RecordPoem extends Activity {
 
 				popupWindow.setFocusable(true);
 				popupWindow.update();
+				timerValue2 = (TextView)v.findViewById(R.id.timerValue2);
 
 				final Button playBack = (Button) v.findViewById(R.id.startButton);
 				playBack.setOnClickListener(
 						new View.OnClickListener() {
 							public void onClick(View v) {
 								playback(v);//starts playback
+								startTime = SystemClock.uptimeMillis();
+								customHandler.postDelayed(updateTimerThread2, 0);
 							}
 						});
 
@@ -78,6 +107,7 @@ public class RecordPoem extends Activity {
 						new View.OnClickListener() {
 							public void onClick(View v) {
 								stopPlayback(v);//stops playback
+								customHandler.removeCallbacks(updateTimerThread2);
 							}
 						});
 
@@ -94,6 +124,42 @@ public class RecordPoem extends Activity {
 			}
 		});
 	}
+	
+	private Runnable updateTimerThread = new Runnable() {
+		public void run() {
+			timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+
+			updatedTime = timeSwapBuff + timeInMilliseconds;
+
+			int secs = (int) (updatedTime/1000);
+			int mins = secs/60;
+			secs = secs %60;
+
+			timerValue.setText("" + mins + ":" + String.format("%02d", secs));
+			customHandler.postDelayed(this, 0);	
+		}
+	};
+
+	private Runnable updateTimerThread2 = new Runnable() {
+		public void run() {
+			timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+
+
+			updatedTime = timeSwapBuff + timeInMilliseconds;
+
+			int secs = (int) (updatedTime/1000);
+			int mins = secs/60;
+			secs = secs %60;
+
+			timerValue2.setText("" + mins + ":" + String.format("%02d", secs));
+			customHandler.postDelayed(this, 0);	
+			if (!myPlayer.isPlaying()) {
+				customHandler.removeCallbacks(updateTimerThread2);
+			}
+
+		}
+
+	};
 
 	public void start(View view) {//starts recording and changes the mic button to the stop button
 		myRecorder = new MediaRecorder();

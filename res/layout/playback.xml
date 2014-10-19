@@ -23,19 +23,21 @@
         android:text="Author's Name"/>
     
     <TextView 
-        android:id="@+id/timer"
+        android:id="@+id/timerValue2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/author"
         android:layout_marginTop="20dp"
-        android:text="timer"/>
+        android:textSize="40sp"
+        android:textColor="#ffffff"
+        android:text="@string/timerVal"/>
     
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/timer"
+        android:layout_below="@+id/timerValue2"
         android:id="@+id/linear1"
         android:orientation="horizontal" >
         
@@ -64,6 +66,15 @@
             android:layout_height="wrap_content"
             android:text="Post"/>
     </LinearLayout>
+    
+    <EditText 
+        android:id="@+id/poemInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/linear1"
+        android:hint="Enter Poem Info"/>
     
 
 </RelativeLayout>

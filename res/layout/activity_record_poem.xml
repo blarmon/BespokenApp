@@ -34,13 +34,15 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/timer"
+        android:id="@+id/timerValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linear1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="timer" />
+        android:textSize="40sp"
+        android:textColor="#ffffff"
+        android:text="@string/timerVal" />
 
    
 

@@ -11,5 +11,6 @@
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_poem">Poem</string>
     <string name="title_activity_search_page">SearchPage</string>
+    <string name="timerVal">00:00</string>
 
 </resources>
