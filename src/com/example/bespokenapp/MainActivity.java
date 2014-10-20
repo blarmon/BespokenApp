@@ -105,9 +105,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		case R.id.search:
 			goToSearchPage();
 			return true;
-		case R.id.home:
-			goToHomePage();
-			return true;
 		case R.id.record:
 			goToRecordPage();
 			return true;

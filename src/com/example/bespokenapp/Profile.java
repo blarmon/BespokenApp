@@ -43,9 +43,6 @@ public class Profile extends Activity {
 		case R.id.search:
 			goToSearchPage();
 			return true;
-		case R.id.home:
-			goToHomePage();
-			return true;
 		case R.id.record:
 			goToRecordPage();
 			return true;
