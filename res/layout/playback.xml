@@ -13,12 +13,21 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:hint="Enter Name of Poem"/>
+    
+    <EditText 
+        android:id="@+id/poemInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/poemName"
+        android:hint="Enter Poem Info"/>
     <TextView
         android:id="@+id/author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/poemName"
+        android:layout_below="@+id/poemInfo"
         android:layout_marginTop="10dp"
         android:text="Author's Name"/>
     
@@ -30,7 +39,7 @@
         android:layout_below="@+id/author"
         android:layout_marginTop="20dp"
         android:textSize="40sp"
-        android:textColor="#ffffff"
+        android:textColor="#ff000000"
         android:text="@string/timerVal"/>
     
     <LinearLayout
@@ -50,7 +59,7 @@
             android:id="@+id/stopButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           
+           	android:visibility="gone"
             android:text="Stop"/>
         
         <Button
@@ -58,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
            
-            android:text="Delete"/>
+            android:text="Try Again"/>
         
         <Button
             android:id="@+id/postButton"
@@ -67,14 +76,7 @@
             android:text="Post"/>
     </LinearLayout>
     
-    <EditText 
-        android:id="@+id/poemInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/linear1"
-        android:hint="Enter Poem Info"/>
+    
     
 
 </RelativeLayout>

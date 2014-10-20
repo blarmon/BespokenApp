@@ -37,6 +37,8 @@ public class RecordPoem extends Activity {
 	private String outputFile = null;
 	private ImageButton startBtn;
 	private Button stopBtn;
+	private Button playBack;
+	private Button stopPlayBack;
 	private TextView timerValue;
 	private TextView timerValue2;
 	long timerLength;
@@ -91,22 +93,27 @@ public class RecordPoem extends Activity {
 				popupWindow.setFocusable(true);
 				popupWindow.update();
 				timerValue2 = (TextView)v.findViewById(R.id.timerValue2);
-
-				final Button playBack = (Button) v.findViewById(R.id.startButton);
+				
+				stopPlayBack = (Button) v.findViewById(R.id.stopButton);
+				playBack = (Button) v.findViewById(R.id.startButton);
 				playBack.setOnClickListener(
 						new View.OnClickListener() {
 							public void onClick(View v) {
 								playback(v);//starts playback
+								playBack.setVisibility(8);
+								stopPlayBack.setVisibility(0);
 								startTime = SystemClock.uptimeMillis();
 								customHandler.postDelayed(updateTimerThread2, 0);
 							}
 						});
 
-				final Button stopPlayBack = (Button) v.findViewById(R.id.stopButton);
+				
 				stopPlayBack.setOnClickListener(
 						new View.OnClickListener() {
 							public void onClick(View v) {
 								stopPlayback(v);//stops playback
+								stopPlayBack.setVisibility(8);
+								playBack.setVisibility(0);
 								customHandler.removeCallbacks(updateTimerThread2);
 							}
 						});
@@ -117,7 +124,7 @@ public class RecordPoem extends Activity {
 							public void onClick(View v) {//closes the popup window so that the user can record a new poem, which will overwrite their last recording
 								popupWindow.dismiss();
 								startBtn.setVisibility(0);
-								stopBtn.setVisibility(4);
+								stopBtn.setVisibility(8);
 
 							}
 						});
@@ -178,7 +185,7 @@ public class RecordPoem extends Activity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		startBtn.setVisibility(4);
+		startBtn.setVisibility(8);
 		stopBtn.setEnabled(true);
 		stopBtn.setVisibility(0);
 	}

@@ -41,7 +41,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:textSize="40sp"
-        android:textColor="#ffffff"
+        android:textColor="#ff000000"
         android:text="@string/timerVal" />
 
    
