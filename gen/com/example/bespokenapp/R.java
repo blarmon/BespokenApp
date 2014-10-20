@@ -22,11 +22,12 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int homeedited=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int male66=0x7f020002;
-        public static final int microphone21=0x7f020003;
-        public static final int search7=0x7f020004;
+        public static final int delete81=0x7f020000;
+        public static final int homeedited=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int male66=0x7f020003;
+        public static final int microphone21=0x7f020004;
+        public static final int search7=0x7f020005;
     }
     public static final class id {
         public static final int action_settings=0x7f080012;
@@ -50,6 +51,7 @@ public final class R {
         public static final int stopButton=0x7f08000d;
         public static final int timerValue=0x7f080006;
         public static final int timerValue2=0x7f08000e;
+        public static final int trash=0x7f080017;
         public static final int webview1=0x7f080008;
         public static final int webview2=0x7f080009;
     }
@@ -67,9 +69,10 @@ public final class R {
     public static final class menu {
         public static final int main=0x7f070000;
         public static final int main_activity_actions=0x7f070001;
-        public static final int profile=0x7f070002;
-        public static final int record_poem=0x7f070003;
-        public static final int search_page=0x7f070004;
+        public static final int poem_menu=0x7f070002;
+        public static final int profile=0x7f070003;
+        public static final int record_poem=0x7f070004;
+        public static final int search_page=0x7f070005;
     }
     public static final class string {
         public static final int action_settings=0x7f050005;
