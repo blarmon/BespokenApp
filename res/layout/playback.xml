@@ -3,80 +3,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray">
-    
-    
-    <EditText 
+    android:background="@android:color/darker_gray" >
+
+    <EditText
         android:id="@+id/poemName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:hint="Enter Name of Poem"/>
-    
-    <EditText 
-        android:id="@+id/poemInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/poemName"
-        android:hint="Enter Poem Info"/>
-    <TextView
-        android:id="@+id/author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/poemInfo"
-        android:layout_marginTop="10dp"
-        android:text="Author's Name"/>
-    
-    <TextView 
-        android:id="@+id/timerValue2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/author"
-        android:layout_marginTop="20dp"
-        android:textSize="40sp"
-        android:textColor="#ff000000"
-        android:text="@string/timerVal"/>
-    
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/timerValue2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:hint="Enter Name of Poem" />
+
+    <EditText
+        android:id="@+id/poemInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/poemName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:hint="Enter Poem Info" />
+
+    <LinearLayout
         android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/poemInfo"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
         android:orientation="horizontal" >
-        
+
         <Button
             android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start"/>
+            android:text="Start" />
+
         <Button
             android:id="@+id/stopButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           	android:visibility="gone"
-            android:text="Stop"/>
-        
-        <Button
-            android:id="@+id/deleteButton"
+            android:text="Stop"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/timerValue2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           
-            android:text="Try Again"/>
-        
-        <Button
-            android:id="@+id/postButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Post"/>
+            android:text="@string/timerVal"
+            android:textColor="#ff000000"
+            android:textSize="30sp" />
     </LinearLayout>
-    
-    
-    
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear1"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="Try Again" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/postButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Post" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

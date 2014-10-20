@@ -87,7 +87,7 @@ public class RecordPoem extends Activity {
 				v = layoutInflater.inflate(R.layout.playback, null);
 				final PopupWindow popupWindow = new PopupWindow(v, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-				popupWindow.showAtLocation(v, Gravity.TOP, 0, 0);
+				popupWindow.showAtLocation(v, Gravity.TOP, 0, 175);
 				EditText poemName = (EditText)v.findViewById(R.id.poemName);
 
 				popupWindow.setFocusable(true);
