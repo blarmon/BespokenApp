@@ -9,6 +9,7 @@ import java.io.IOException;
 
 
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -24,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -92,6 +94,10 @@ public class RecordPoem extends Activity {
 
 				popupWindow.setFocusable(true);
 				popupWindow.update();
+				poemName.requestFocus();
+				InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+				imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+				
 				timerValue2 = (TextView)v.findViewById(R.id.timerValue2);
 				
 				stopPlayBack = (Button) v.findViewById(R.id.stopButton);
@@ -123,6 +129,8 @@ public class RecordPoem extends Activity {
 						new View.OnClickListener() {
 							public void onClick(View v) {//closes the popup window so that the user can record a new poem, which will overwrite their last recording
 								popupWindow.dismiss();
+								InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+								imm.toggleSoftInput(InputMethodManager.RESULT_HIDDEN, 0);
 								startBtn.setVisibility(0);
 								stopBtn.setVisibility(8);
 
