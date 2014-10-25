@@ -7,23 +7,42 @@ package com.example.bespokenapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class Profile extends Activity {
+	
+	private SwipeRefreshLayout swipeView2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 		
-		String address = getIntent().getExtras().getString("url");
-		WebView myWebView;
-		myWebView = (WebView) findViewById(R.id.profileWebView);
-		myWebView.loadUrl(address);
-		myWebView.setWebViewClient(new WebViewClient()); 
+		String address2 = getIntent().getExtras().getString("url");
+		final WebView myWebView2;
+		myWebView2 = (WebView) findViewById(R.id.profileWebView);
+		myWebView2.loadUrl(address2);
+		myWebView2.setWebViewClient(new WebViewClient()); 
+		
+		swipeView2 = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout2);	 
+		swipeView2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				swipeView2.setRefreshing(true);
+				myWebView2.reload();
+				( new Handler()).postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						swipeView2.setRefreshing(false);
+					}
+				}, 3000);
+			}
+		});
 
 	}
 

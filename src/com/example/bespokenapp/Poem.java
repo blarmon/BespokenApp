@@ -16,14 +16,14 @@ import android.webkit.WebViewClient;
 
 public class Poem extends Activity {
 
-	SwipeRefreshLayout swipeView;
+	private SwipeRefreshLayout swipeView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_poem);
 
-		final String address = getIntent().getExtras().getString("url");
+		String address = getIntent().getExtras().getString("url");
 		final WebView myWebView;
 		myWebView = (WebView) findViewById(R.id.poemWebView);
 		myWebView.loadUrl(address);
@@ -34,7 +34,7 @@ public class Poem extends Activity {
 			@Override
 			public void onRefresh() {
 				swipeView.setRefreshing(true);
-				myWebView.loadUrl(address);
+				myWebView.reload();
 				( new Handler()).postDelayed(new Runnable() {
 					@Override
 					public void run() {
