@@ -271,7 +271,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		 * This method gives us custom control over what happens with the links we click.
 		 * It's still problematic for going back to the main activity (it stays on the same page)
 		 */
-		private class MyWebViewClient extends WebViewClient {
+		public class MyWebViewClient extends WebViewClient {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
