@@ -4,8 +4,11 @@
 
 package com.example.bespokenapp;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -27,7 +30,26 @@ public class Profile extends Activity {
 		final WebView myWebView2;
 		myWebView2 = (WebView) findViewById(R.id.profileWebView);
 		myWebView2.loadUrl(address2);
-		myWebView2.setWebViewClient(new WebViewClient()); 
+		myWebView2.setWebViewClient(new WebViewClient() {
+				@Override
+				public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+					//This determines whether the user has clicked on either a poem or profile page, 
+					//and then sends them to the appropriate activity.
+					List<String> temp = Uri.parse(url).getPathSegments();
+					if (temp.contains("followers")) {
+						goToFollow();
+						return true; //this ensures that the link isn't also opened in the parent activity.
+					}
+					else if (temp.contains("following")) {
+						goToFollow();
+						return true; //this ensures that the link isn't also opened in the parent activity.
+					}
+					else {
+						return false;
+					}
+			}
+		}); 
 		
 		swipeView2 = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout2);	 
 		swipeView2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -72,6 +94,11 @@ public class Profile extends Activity {
 
 	public void goToRecordPage(){
 		Intent intent = new Intent(this, RecordPoem.class);
+		startActivity(intent);
+	}
+	
+	public void goToFollow() {
+		Intent intent = new Intent(this, Follow.class);
 		startActivity(intent);
 	}
 	
