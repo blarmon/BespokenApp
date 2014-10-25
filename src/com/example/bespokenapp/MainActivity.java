@@ -16,8 +16,10 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -45,6 +47,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	ViewPager mViewPager;
 
 	static WebView myWebView1, myWebView2;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -219,7 +222,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		 * The fragment argument representing the section number for this
 		 * fragment.
 		 */
-
+		SwipeRefreshLayout swipeView3;
 		private static final String ARG_SECTION_NUMBER = "section_number";
 
 		/**
@@ -245,6 +248,21 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			myWebView1 = (WebView) rootView.findViewById(R.id.webview1);
 			myWebView1.loadUrl("http://bespokenapp.appspot.com");
 			myWebView1.setWebViewClient(new MyWebViewClient());
+			
+			swipeView3 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout3);	 
+			swipeView3.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+				@Override
+				public void onRefresh() {
+					swipeView3.setRefreshing(true);
+					myWebView1.reload();
+					( new Handler()).postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							swipeView3.setRefreshing(false);
+						}
+					}, 3000);
+				}
+			});
 
 			return rootView;
 		}
@@ -284,7 +302,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		 * The fragment argument representing the section number for this
 		 * fragment.
 		 */
-
+		SwipeRefreshLayout swipeView4;
 		private static final String ARG_SECTION_NUMBER = "section_number";
 
 		/**
@@ -310,6 +328,21 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			myWebView2 = (WebView) rootView.findViewById(R.id.webview2);
 			myWebView2.loadUrl("http://bespokenapp.appspot.com/top-poems");
 			myWebView2.setWebViewClient(new MyWebViewClient());
+			
+			swipeView4 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout4);	 
+			swipeView4.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+				@Override
+				public void onRefresh() {
+					swipeView4.setRefreshing(true);
+					myWebView2.reload();
+					( new Handler()).postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							swipeView4.setRefreshing(false);
+						}
+					}, 3000);
+				}
+			});
 
 			return rootView;
 		}
