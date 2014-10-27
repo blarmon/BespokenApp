@@ -5,7 +5,25 @@
 
 package com.example.bespokenapp;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +32,9 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -133,6 +153,92 @@ public class RecordPoem extends Activity {
 
 							}
 						});
+				
+				final Button postButton = (Button) v.findViewById(R.id.postButton);
+				postButton.setOnClickListener(
+						new View.OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								
+								HttpClient httpClient = new DefaultHttpClient();
+								
+								HttpGet getRequest = new HttpGet("http://bespokenapp.appspot.com/addPoem");
+			                    ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			                    String upload_url = "";
+			                    String the_upload_url = "";
+			                    			                    
+			                    try {
+			                    	//convert the contents of the webpage to a string.
+			                    	enableStrictMode();
+			                    	HttpResponse getResponse = httpClient.execute(getRequest);
+			                    	HttpEntity entity = getResponse.getEntity(); 
+				                    InputStream is = entity.getContent(); // Create an InputStream with the response
+				                    //BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+				                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+				                    while ((the_upload_url = reader.readLine()) != null) {
+				                    	if (the_upload_url.contains("/_ah/upload")) {
+				                    		upload_url = the_upload_url; //This never happens.  Gah!
+				                    	}
+				                    }
+				                    
+				                    is.close(); // Close the stream
+				                    
+								} catch (ClientProtocolException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+			                    
+			                    upload_url = upload_url.trim();
+			                    Log.d("upload_url", upload_url);
+			                    
+			                    HttpPost postRequest = new HttpPost("http://bespokenapp.appspot.com/testForm");
+			                    //HttpPost postRequest = new HttpPost(upload_url);
+			                    
+								try {
+									enableStrictMode(); //this is necessary to let us post the request.
+									
+								    /* MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+								    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+								    //builder.addPart("file", new FileBody(new File(fileName)));
+								    //builder.addTextBody("poem_name", "Testing poem_name from Android", ContentType.MULTIPART_FORM_DATA);
+								    //builder.addTextBody("poem_text", "blah", ContentType.MULTIPART_FORM_DATA);
+								    //builder.addTextBody("nickname", "test from android", ContentType.MULTIPART_FORM_DATA);
+								    //postRequest.setEntity(builder.build());
+								    HttpResponse response = httpClient.execute(postRequest);
+									HttpEntity theEntity = response.getEntity();
+								    theEntity.consumeContent();
+								    httpClient.getConnectionManager().shutdown(); */
+								    
+								    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+							        nameValuePairs.add(new BasicNameValuePair("nickname", "test with NameValuePair"));
+							        postRequest.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+							        HttpResponse response = httpClient.execute(postRequest);
+							        Log.d("upload_url_new_place", upload_url);
+							        
+								    /*StringBody poem_name = new StringBody("Testing poem_name from the Android");
+								    StringBody poem_text = new StringBody("blah");
+								    MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+								    entity.addPart("poem_name", poem_name);
+								    entity.addPart("poem_text", poem_text);
+									postRequest.setEntity(entity);
+									HttpResponse response = httpClient.execute(postRequest);*/
+									
+								} catch (ClientProtocolException e) {
+									// Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+								popupWindow.dismiss(); //clse the popup window after the file is posted to the blobstore.								
+							}
+						});
+				
 			}
 		});
 	}
@@ -285,5 +391,13 @@ public class RecordPoem extends Activity {
 		Intent intent = new Intent(this, Poem.class);
 		intent.putExtra("url", poemURL);
 		startActivity(intent);
+	}
+	
+	/* this is a dirty workaround that allows us to upload files */
+	public void enableStrictMode()
+	{
+	    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	 
+	    StrictMode.setThreadPolicy(policy);
 	}
 }
