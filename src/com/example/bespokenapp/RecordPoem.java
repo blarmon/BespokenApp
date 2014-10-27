@@ -7,9 +7,6 @@ package com.example.bespokenapp;
 
 import java.io.IOException;
 
-
-
-
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
