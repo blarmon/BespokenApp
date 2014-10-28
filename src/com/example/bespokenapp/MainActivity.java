@@ -111,9 +111,29 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		case R.id.record:
 			goToRecordPage();
 			return true;
+		case R.id.logout:
+			logOut();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	public void logOut(){
+		WebView myWebView = (WebView) findViewById(R.id.webview2);
+		myWebView.loadUrl("http://www.facebook.com/l.php?u=http%3A%2F%2Fbespokenapp.appspot.com%2F_ah%2Flogout%3Fcontinue%3Dhttps%253A%252F%252Fwww.google.com%252Faccounts%252FLogout%253Fcontinue%253Dhttps%253A%252F%252Fappengine.google.com%252F_ah%252Flogout%25253Fcontinue%25253Dhttp%253A%252F%252Fbespokenapp.appspot.com%252F%2526service%253Dah&h=lAQEcQGJW");
+		myWebView.setWebViewClient(new WebViewClient(){
+			public void onPageFinished(WebView view, String url) {
+				doneLoading();
+			}
+		});
+	}
+	
+	void doneLoading(){
+		Intent intent = new Intent(this, Login.class);
+		String loggedOut = "logged out";
+		intent.putExtra("loggedOut", loggedOut);
+		startActivity(intent);
 	}
 
 	public void goToRecordPage(){
