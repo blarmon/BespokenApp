@@ -40,6 +40,7 @@ public final class R {
         public static final int micImage=0x7f08000c;
         public static final int pager=0x7f080000;
         public static final int pager_title_strip=0x7f080006;
+        public static final int pauseButton=0x7f080016;
         public static final int poemInfo=0x7f080019;
         public static final int poemName=0x7f080018;
         public static final int poemWebView=0x7f080003;
@@ -53,7 +54,6 @@ public final class R {
         public static final int section_label=0x7f080010;
         public static final int startButton=0x7f080015;
         public static final int stop=0x7f08000d;
-        public static final int stopButton=0x7f080016;
         public static final int swipeRefreshLayout=0x7f080002;
         public static final int swipeRefreshLayout2=0x7f080007;
         public static final int swipeRefreshLayout3=0x7f080011;

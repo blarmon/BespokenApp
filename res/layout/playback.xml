@@ -20,10 +20,10 @@
             android:text="Start" />
 
         <Button
-            android:id="@+id/stopButton"
+            android:id="@+id/pauseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stop"
+            android:text="Pause"
             android:visibility="gone" />
 
         <TextView
@@ -42,7 +42,7 @@
         android:layout_below="@id/linear1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:hint="Enter Name of Poem" />
+        android:hint="Enter name of poem here" />
 
     <EditText
         android:id="@+id/poemInfo"
@@ -51,7 +51,7 @@
         android:layout_below="@+id/poemName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:hint="Enter Poem Info" />
+        android:hint="Enter poem text or information here" />
 
     <LinearLayout
         android:id="@+id/linear2"

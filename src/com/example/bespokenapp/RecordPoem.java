@@ -58,7 +58,7 @@ public class RecordPoem extends Activity {
 	private ImageButton startBtn;
 	private Button stopBtn;
 	private Button playBack;
-	private Button stopPlayBack;
+	private Button pausePlayBack;
 	private TextView timerValue;
 	private TextView timerValue2;
 	long timerLength;
@@ -70,7 +70,7 @@ public class RecordPoem extends Activity {
 	long timeInMilliseconds = 0L;
 	long timeSwapBuff = 0L;
 	long updatedTime = 0L;
-
+	int position = 0;
 	long poemLength = 0L;
 	
 	String uniqueUserID;
@@ -117,7 +117,7 @@ public class RecordPoem extends Activity {
 				v = layoutInflater.inflate(R.layout.playback, null);
 				final PopupWindow popupWindow = new PopupWindow(v, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
-				popupWindow.showAtLocation(v, Gravity.TOP, 0, 175);
+				popupWindow.showAtLocation(v, Gravity.TOP, 0, 200);
 				
 				final EditText poemName = (EditText)v.findViewById(R.id.poemName);
 		        final EditText poemText = (EditText)v.findViewById(R.id.poemInfo);
@@ -131,26 +131,27 @@ public class RecordPoem extends Activity {
 				timerValue2 = (TextView)v.findViewById(R.id.timerValue2);
 				
 				
-				stopPlayBack = (Button) v.findViewById(R.id.stopButton);
+				pausePlayBack = (Button) v.findViewById(R.id.pauseButton);
 				playBack = (Button) v.findViewById(R.id.startButton);
 				playBack.setOnClickListener(
 						new View.OnClickListener() {
 							public void onClick(View v) {
 								playback(v);//starts playback
 								playBack.setVisibility(8);
-								stopPlayBack.setVisibility(0);
+								pausePlayBack.setVisibility(0);
 								startTime = SystemClock.uptimeMillis();
 								customHandler.postDelayed(updateTimerThread2, 0);
 							}
 						});
 
 				
-				stopPlayBack.setOnClickListener(
+				pausePlayBack.setOnClickListener(
 						new View.OnClickListener() {
 							public void onClick(View v) {
 								stopPlayback(v);//stops playback
-								stopPlayBack.setVisibility(8);
+								pausePlayBack.setVisibility(8);
 								playBack.setVisibility(0);
+								timeSwapBuff += timeInMilliseconds;
 								customHandler.removeCallbacks(updateTimerThread2);
 							}
 						});
@@ -164,6 +165,8 @@ public class RecordPoem extends Activity {
 								imm.toggleSoftInput(InputMethodManager.RESULT_HIDDEN, 0);
 								startBtn.setVisibility(0);
 								stopBtn.setVisibility(8);
+								timeSwapBuff=0;
+								position=0;
 
 							}
 						});
@@ -174,6 +177,9 @@ public class RecordPoem extends Activity {
 														
 							@Override
 							public void onClick(View v) {
+								
+								InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+								imm.toggleSoftInput(InputMethodManager.RESULT_HIDDEN, 0);
 								
 								HttpClient httpClient = new DefaultHttpClient();
 
@@ -302,9 +308,9 @@ public class RecordPoem extends Activity {
 		public void run() {
 			timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
 
-			updatedTime = timeSwapBuff + timeInMilliseconds;
+			
 
-			int secs = (int) (updatedTime/1000);
+			int secs = (int) (timeInMilliseconds/1000);
 			int mins = secs/60;
 			secs = secs %60;
 
@@ -328,6 +334,11 @@ public class RecordPoem extends Activity {
 			customHandler.postDelayed(this, 0);	
 			if (!myPlayer.isPlaying()) {
 				customHandler.removeCallbacks(updateTimerThread2);
+				position = 0;
+				pausePlayBack.setVisibility(8);
+				playBack.setVisibility(0);
+				timerValue2.setText("00:00");
+				updatedTime = 0;
 			}
 
 		}
@@ -377,6 +388,7 @@ public class RecordPoem extends Activity {
 			myPlayer = new MediaPlayer();
 			myPlayer.setDataSource(outputFile);
 			myPlayer.prepare();
+			myPlayer.seekTo(position);
 			myPlayer.start();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -388,6 +400,7 @@ public class RecordPoem extends Activity {
 		try {
 			if (myPlayer != null) {
 				myPlayer.stop();
+				position = myPlayer.getCurrentPosition();
 				myPlayer.release();
 				myPlayer = null;
 
