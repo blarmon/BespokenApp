@@ -78,22 +78,15 @@ public class Poem extends Activity implements ActionBar.TabListener{
 
 	}
 
-
-
 	@Override
-
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.poem_menu, menu);
 		return true;
 
 	}
 
-
-
 	@Override
-
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		// Handle presses on the action bar items
@@ -106,9 +99,7 @@ public class Poem extends Activity implements ActionBar.TabListener{
 		default:
 
 			return super.onOptionsItemSelected(item);
-
 		}
-
 	}
 
 
@@ -291,7 +282,6 @@ public class Poem extends Activity implements ActionBar.TabListener{
 
 					((MainActivity)getActivity()).goToProfilePage(url);
 					return true; //this ensures that the link isn't also opened in the parent activity.
-
 				}
 
 				else if (temp.contains("poem")) {
@@ -319,35 +309,25 @@ public class Poem extends Activity implements ActionBar.TabListener{
 	public static class PlaceholderFragment4 extends Fragment {
 
 		/**
-
 		 * The fragment argument representing the section number for this
-
 		 * fragment.
-
 		 */
 
 		SwipeRefreshLayout swipeView4;
-
 		private static final String ARG_SECTION_NUMBER = "section_number";
 
 
 
 		/**
-
 		 * Returns a new instance of this fragment for the given section number.
-
 		 */
 
 		public static PlaceholderFragment4 newInstance(int sectionNumber) {
 
 			PlaceholderFragment4 fragment = new PlaceholderFragment4();
-
 			Bundle args = new Bundle();
-
 			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-
 			fragment.setArguments(args);
-
 			return fragment;
 
 		}
@@ -355,153 +335,100 @@ public class Poem extends Activity implements ActionBar.TabListener{
 
 
 		public PlaceholderFragment4() {
-
 		}
 
-
-
 		@Override
-
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-
 				Bundle savedInstanceState) {
 
 			View rootView = inflater.inflate(R.layout.mypoems2, container,
-
 					false);
 
 
 
 			myWebView2 = (WebView) rootView.findViewById(R.id.webview2);
-
 			myWebView2.loadUrl("http://bespokenapp.appspot.com/top-poems");
-
 			myWebView2.setWebViewClient(new MyWebViewClient());
-
-
-
+			
 			swipeView4 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout4);	 
-
 			swipeView4.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
 				@Override
-
 				public void onRefresh() {
 
 					swipeView4.setRefreshing(true);
-
 					myWebView2.reload();
-
 					( new Handler()).postDelayed(new Runnable() {
 
 						@Override
-
 						public void run() {
-
 							swipeView4.setRefreshing(false);
-
 						}
-
 					}, 3000);
-
 				}
-
 			});
-
-
-
+			
 			return rootView;
-
 		}
 
 
 
 		/*
-
 		 * This method gives us custom control over what happens with the links we click.
-
 		 * It's still problematic for going back to the main activity (it stays on the same page)
-
 		 */
 
 		private class MyWebViewClient extends WebViewClient {
 
 			@Override
-
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-
-
 				//This determines whether the user has clicked on either a poem or profile page, 
-
 				//and then sends them to the appropriate activity.
 
 				List<String> temp = Uri.parse(url).getPathSegments();
 
 				if (temp.contains("user")) {
-
 					((MainActivity)getActivity()).goToProfilePage(url);
-
 					return true; //this ensures that the link isn't also opened in the parent activity.
-
 				}
 
 				else if (temp.contains("poem")) {
-
+					
 					((MainActivity)getActivity()).goToPoemPage(url);
-
 					return true; //this ensures that the link isn't also opened in the parent activity.
-
 				}
 
 				else {
-
 					return false;
-
 				}
-
 			}
-
 		}
-
 	}
 
 	/*
-
 	 * This method enables back-button functionality for the WebViews.  
-
 	 */
 
 	@Override
-
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 		// Check if the key event was the Back button and if there's history
-
 		if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView1.canGoBack()) {
-
 			myWebView1.goBack();
-
 			return true;
-
 		}
 
 		else if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView2.canGoBack()) {
-
 			myWebView2.goBack();
-
 			return true;
-
 		}
 
 		// If it wasn't the Back key or there's no web page history, bubble up to the default
-
 		// system behavior (probably exit the activity)
 
 		return super.onKeyDown(keyCode, event);
-
 	}
-
 }
 
 
