@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 
 public class SearchPage extends Activity {
 
@@ -16,6 +17,10 @@ public class SearchPage extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_page);
+		
+		WebView myWebView;
+		myWebView = (WebView) findViewById(R.id.profileWebViewSearch);
+		myWebView.loadUrl("http://bespokenapp.appspot.com/search");
 	}
 
 	@Override

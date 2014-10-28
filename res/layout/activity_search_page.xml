@@ -8,19 +8,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.bespokenapp.SearchPage" >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/search7" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Search for a Poem" />
-    </LinearLayout>
+    <WebView
+        android:id="@+id/profileWebViewSearch"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 
 </RelativeLayout>
