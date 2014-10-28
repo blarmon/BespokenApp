@@ -9,21 +9,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -71,11 +69,17 @@ public class RecordPoem extends Activity {
 	long updatedTime = 0L;
 
 	long poemLength = 0L;
+	
+	String uniqueUserID;
+	//uniqueUserID = "blah!";
+	//Intent testIntent = getIntent();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_record_poem);
+		
+		uniqueUserID = getIntent().getExtras().getString("uniqueUser");
 		
 		timerValue = (TextView) findViewById(R.id.timerValue);
 
@@ -157,7 +161,7 @@ public class RecordPoem extends Activity {
 				final Button postButton = (Button) v.findViewById(R.id.postButton);
 				postButton.setOnClickListener(
 						new View.OnClickListener() {
-							
+														
 							@Override
 							public void onClick(View v) {
 								
@@ -178,7 +182,7 @@ public class RecordPoem extends Activity {
 				                    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 				                    while ((the_upload_url = reader.readLine()) != null) {
 				                    	if (the_upload_url.contains("/_ah/upload")) {
-				                    		upload_url = the_upload_url; //This never happens.  Gah!
+				                    		upload_url = the_upload_url;
 				                    	}
 				                    }
 				                    
@@ -195,37 +199,65 @@ public class RecordPoem extends Activity {
 			                    upload_url = upload_url.trim();
 			                    Log.d("upload_url", upload_url);
 			                    
-			                    HttpPost postRequest = new HttpPost("http://bespokenapp.appspot.com/testForm");
-			                    //HttpPost postRequest = new HttpPost(upload_url);
+			                    //HttpPost postRequest = new HttpPost("http://bespokenapp.appspot.com/testForm");
+			                    HttpPost postRequest = new HttpPost(upload_url);
 			                    
 								try {
 									enableStrictMode(); //this is necessary to let us post the request.
 									
-								    /* MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+								    /*MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 								    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 								    //builder.addPart("file", new FileBody(new File(fileName)));
-								    //builder.addTextBody("poem_name", "Testing poem_name from Android", ContentType.MULTIPART_FORM_DATA);
-								    //builder.addTextBody("poem_text", "blah", ContentType.MULTIPART_FORM_DATA);
+								    builder.addTextBody("poem_name", "Testing poem_name from Android", ContentType.MULTIPART_FORM_DATA);
+								    builder.addTextBody("poem_text", "blah", ContentType.MULTIPART_FORM_DATA);
 								    //builder.addTextBody("nickname", "test from android", ContentType.MULTIPART_FORM_DATA);
 								    //postRequest.setEntity(builder.build());
 								    HttpResponse response = httpClient.execute(postRequest);
-									HttpEntity theEntity = response.getEntity();
-								    theEntity.consumeContent();
-								    httpClient.getConnectionManager().shutdown(); */
+									//HttpEntity theEntity = response.getEntity();
+								    //theEntity.consumeContent();
 								    
-								    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+								    String postResponseOutput = "Null   ";
+							        InputStream iStream = response.getEntity().getContent();
+							        BufferedReader reader = new BufferedReader(new InputStreamReader(iStream));
+				                    while ((the_upload_url = reader.readLine()) != null) {
+				                    	postResponseOutput += the_upload_url;
+				                    }
+				                    Log.d("HttpResponse Output", postResponseOutput);
+				                    
+				                    httpClient.getConnectionManager().shutdown();*/
+								    
+								    /* List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 							        nameValuePairs.add(new BasicNameValuePair("nickname", "test with NameValuePair"));
 							        postRequest.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 							        HttpResponse response = httpClient.execute(postRequest);
 							        Log.d("upload_url_new_place", upload_url);
 							        
-								    /*StringBody poem_name = new StringBody("Testing poem_name from the Android");
+							        String postResponseOutput = "Null   ";
+							        InputStream iStream = response.getEntity().getContent();
+							        BufferedReader reader = new BufferedReader(new InputStreamReader(iStream));
+				                    while ((the_upload_url = reader.readLine()) != null) {
+				                    	postResponseOutput += the_upload_url;
+				                    }
+				                    Log.d("HttpResponse Output", postResponseOutput); */
+							        
+								    StringBody poem_name = new StringBody("Testing poem_name from the Android");
 								    StringBody poem_text = new StringBody("blah");
+								    StringBody uniqueUserIDsb = new StringBody(uniqueUserID);
 								    MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 								    entity.addPart("poem_name", poem_name);
 								    entity.addPart("poem_text", poem_text);
+								    entity.addPart("unique_user_ID", uniqueUserIDsb); //This is so we can set the poem entity's uniqueUserID field manually.
 									postRequest.setEntity(entity);
-									HttpResponse response = httpClient.execute(postRequest);*/
+									HttpResponse response = httpClient.execute(postRequest);
+									
+									String postResponseOutput = "Null   ";
+							        InputStream iStream = response.getEntity().getContent();
+							        BufferedReader reader = new BufferedReader(new InputStreamReader(iStream));
+				                    while ((the_upload_url = reader.readLine()) != null) {
+				                    	postResponseOutput += the_upload_url;
+				                    }
+				                    Log.d("uniqueUserID from intent", uniqueUserID);
+				                    Log.d("HttpResponse Output", postResponseOutput);
 									
 								} catch (ClientProtocolException e) {
 									// Auto-generated catch block
@@ -393,7 +425,7 @@ public class RecordPoem extends Activity {
 		startActivity(intent);
 	}
 	
-	/* this is a dirty workaround that allows us to upload files */
+	/* this is a dirty workaround that allows us to make http post requests */
 	public void enableStrictMode()
 	{
 	    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

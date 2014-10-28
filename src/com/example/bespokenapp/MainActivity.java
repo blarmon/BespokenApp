@@ -7,6 +7,7 @@ package com.example.bespokenapp;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -17,6 +18,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -47,6 +49,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	ViewPager mViewPager;
 
 	static WebView myWebView1, myWebView2;
+	static String homepageHTML = "none";
 	
 
 	@Override
@@ -109,7 +112,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			goToSearchPage();
 			return true;
 		case R.id.record:
-			goToRecordPage();
+			goToRecordPage(homepageHTML);
 			return true;
 		case R.id.logout:
 			logOut();
@@ -136,8 +139,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		startActivity(intent);
 	}
 
-	public void goToRecordPage(){
+	public void goToRecordPage(String ID){
 		Intent intent = new Intent(this, RecordPoem.class);
+		intent.putExtra("uniqueUser", ID);
 		startActivity(intent);
 	}
 	
@@ -347,6 +351,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 			myWebView2 = (WebView) rootView.findViewById(R.id.webview2);
 			myWebView2.loadUrl("http://bespokenapp.appspot.com/top-poems");
+
+			myWebView2.getSettings().setJavaScriptEnabled(true);  
+			myWebView2.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");  
+			
 			myWebView2.setWebViewClient(new MyWebViewClient());
 			
 			swipeView4 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout4);	 
@@ -365,6 +373,29 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			});
 
 			return rootView;
+		}
+		
+		/* An instance of this class will be registered as a JavaScript interface */
+		class MyJavaScriptInterface   
+		{  
+		    @SuppressWarnings("unused")  
+		    @android.webkit.JavascriptInterface
+		    public void getHTML(String html)  
+		    {  
+		        //Log.d("homepage html output", html); //'html' contains all of the html from the homepage.
+		        
+		        //go through the html file and pick out the unique user ID from the comments.  This is necessary to pass into 
+		        Scanner scanner = new Scanner(html);
+		        while (scanner.hasNextLine()) {
+		          String line = scanner.nextLine();
+		          if (line.contains("The current user uniqueUserID:")) {
+		        	  line = line.replaceAll("\\D+",""); //Thanks, StackOverflow!
+		        	  homepageHTML = line.trim(); //This is the uniqueUserID string.
+		        	  break;
+		          }
+		        }
+		        scanner.close();
+		    }  
 		}
 		
 		/*
@@ -390,6 +421,12 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 					return false;
 				}
 			}
+			
+			//This ought to get the HTML source from the webview.
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				myWebView2.loadUrl("javascript:window.HTMLOUT.getHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+			}
 		}
 	}
 
@@ -410,5 +447,13 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		// If it wasn't the Back key or there's no web page history, bubble up to the default
 		// system behavior (probably exit the activity)
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	/* this is a dirty workaround that allows us to make http post requests */
+	public void enableStrictMode()
+	{
+	    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+	 
+	    StrictMode.setThreadPolicy(policy);
 	}
 }
