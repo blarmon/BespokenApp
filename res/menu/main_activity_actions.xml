@@ -9,9 +9,9 @@
           android:title="search"
           android:showAsAction="always" />
     <item android:id="@+id/profile"
-          android:title="Profile"
+          android:title="My Profile"
           android:showAsAction="never" />
      <item android:id="@+id/logout"
-          android:title="log Out"
+          android:title="Log Out"
           android:showAsAction="never" />
 </menu>

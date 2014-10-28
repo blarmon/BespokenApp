@@ -60,7 +60,6 @@ public final class R {
         public static final int swipeRefreshLayout4=0x7f080013;
         public static final int timerValue=0x7f08000e;
         public static final int timerValue2=0x7f080017;
-        public static final int trash=0x7f080022;
         public static final int vpPager=0x7f080005;
         public static final int vpPager2=0x7f08000a;
         public static final int webview1=0x7f080012;

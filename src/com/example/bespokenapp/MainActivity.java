@@ -228,10 +228,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				String title1 = "My Feed";
+				String title1 = "Newsfeed";
 				return title1;
 			case 1:
-				String title2 = "Top Poems";
+				String title2 = "Latest Poems";
 				return title2;
 			}
 			return null;

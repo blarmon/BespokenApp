@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.KeyEvent;
@@ -44,7 +45,7 @@ public class Profile extends Activity implements ActionBar.TabListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
-
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		String address2 = getIntent().getExtras().getString("url");
 		final WebView myWebView2;
 		myWebView2 = (WebView) findViewById(R.id.profileWebView);
@@ -122,6 +123,9 @@ public class Profile extends Activity implements ActionBar.TabListener{
 		case R.id.record:
 			goToRecordPage();
 			return true;
+		case android.R.id.home:
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

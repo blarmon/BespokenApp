@@ -7,6 +7,7 @@ package com.example.bespokenapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
@@ -17,7 +18,7 @@ public class SearchPage extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_page);
-		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		WebView myWebView;
 		myWebView = (WebView) findViewById(R.id.profileWebViewSearch);
 		myWebView.loadUrl("http://bespokenapp.appspot.com/search");
@@ -26,7 +27,7 @@ public class SearchPage extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+		getMenuInflater().inflate(R.menu.search_page, menu);
 		return true;
 	}
 
@@ -42,6 +43,9 @@ public class SearchPage extends Activity {
 		case R.id.record:
 			goToRecordPage();
 			return true;
+		case android.R.id.home:
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

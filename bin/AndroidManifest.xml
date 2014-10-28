@@ -24,19 +24,23 @@
         </activity>
         <activity
             android:name=".RecordPoem"
-            android:label="@string/title_activity_record_poem" >
+            android:label="@string/title_activity_record_poem" 
+            android:parentActivityName="com.example.bespokenapp.MainActivity" >
         </activity>
         <activity
             android:name=".Profile"
-            android:label="@string/title_activity_profile" >
+            android:label="@string/title_activity_profile"
+            android:parentActivityName="com.example.bespokenapp.MainActivity" >
         </activity>
         <activity
             android:name=".Poem"
-            android:label="@string/title_activity_poem" >
+            android:label="@string/title_activity_poem"
+            android:parentActivityName="com.example.bespokenapp.MainActivity" >
         </activity>
         <activity
             android:name=".SearchPage"
-            android:label="@string/title_activity_search_page" >
+            android:label="@string/title_activity_search_page"
+            android:parentActivityName="com.example.bespokenapp.MainActivity" >
         </activity>
         <activity
             android:name=".Follow"

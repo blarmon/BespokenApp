@@ -34,7 +34,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.os.SystemClock;
-import android.text.Editable;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -84,7 +84,7 @@ public class RecordPoem extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_record_poem);
-		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		uniqueUserID = getIntent().getExtras().getString("uniqueUser");
 		
 		timerValue = (TextView) findViewById(R.id.timerValue);
@@ -414,7 +414,7 @@ public class RecordPoem extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+		getMenuInflater().inflate(R.menu.record_poem, menu);
 		return true;
 	}
 
@@ -430,6 +430,9 @@ public class RecordPoem extends Activity {
 		case R.id.record:
 			goToRecordPage();
 			return true;
+		case android.R.id.home:
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
