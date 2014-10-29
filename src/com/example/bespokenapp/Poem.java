@@ -34,6 +34,7 @@ public class Poem extends Activity implements ActionBar.TabListener{
 	ViewPager myViewPager;
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	static WebView myWebView1, myWebView2;
+	static String poemAddress = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class Poem extends Activity implements ActionBar.TabListener{
 		setContentView(R.layout.activity_poem);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		String address = getIntent().getExtras().getString("url");
+		poemAddress = address;
 		final WebView myWebView;
 		myWebView = (WebView) findViewById(R.id.poemWebView);
 		myWebView.loadUrl(address);
@@ -233,7 +235,7 @@ public class Poem extends Activity implements ActionBar.TabListener{
 					false);
 
 			myWebView1 = (WebView) rootView.findViewById(R.id.webview1);
-			myWebView1.loadUrl("http://bespokenapp.appspot.com");
+			myWebView1.loadUrl(poemAddress + "/info");
 			myWebView1.setWebViewClient(new MyWebViewClient());
 
 			swipeView3 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout3);	 
@@ -341,7 +343,7 @@ public class Poem extends Activity implements ActionBar.TabListener{
 
 
 			myWebView2 = (WebView) rootView.findViewById(R.id.webview2);
-			myWebView2.loadUrl("http://bespokenapp.appspot.com/top-poems");
+			myWebView2.loadUrl(poemAddress + "/comments");
 			myWebView2.setWebViewClient(new MyWebViewClient());
 			
 			swipeView4 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout4);	 
