@@ -13,17 +13,21 @@
         android:gravity="center"
         android:orientation="horizontal" >
 
-        <Button
+        <ImageButton
             android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start" />
+            android:src="@drawable/playback_image"
+            android:background="@android:color/transparent"
+            android:layout_marginRight="20dp"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/pauseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pause"
+            android:src="@drawable/pause_image"
+            android:background="@android:color/transparent"
+            android:layout_marginRight="20dp"
             android:visibility="gone" />
 
         <TextView

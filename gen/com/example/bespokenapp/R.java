@@ -29,8 +29,12 @@ public final class R {
         public static final int ic_launcher=0x7f020004;
         public static final int loginbackground=0x7f020005;
         public static final int male66=0x7f020006;
-        public static final int microphone21=0x7f020007;
-        public static final int search7=0x7f020008;
+        public static final int mic_image=0x7f020007;
+        public static final int microphone21=0x7f020008;
+        public static final int pause_image=0x7f020009;
+        public static final int playback_image=0x7f02000a;
+        public static final int search7=0x7f02000b;
+        public static final int stop_image=0x7f02000c;
     }
     public static final class id {
         public static final int action_settings=0x7f08001e;

@@ -19,18 +19,18 @@
 
         <ImageButton
             android:id="@+id/micImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:background="#10000000"
-            android:src="@android:drawable/presence_audio_online" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/mic_image" />
 
-        <Button
+        <ImageButton
             android:id="@+id/stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:text="Stop"
+            android:src="@drawable/stop_image"
+            android:background="@android:color/transparent"
             android:visibility="gone" />
     </LinearLayout>
 

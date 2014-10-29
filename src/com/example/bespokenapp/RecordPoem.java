@@ -56,9 +56,9 @@ public class RecordPoem extends Activity {
 	private MediaPlayer myPlayer;
 	private String outputFile = null;
 	private ImageButton startBtn;
-	private Button stopBtn;
-	private Button playBack;
-	private Button pausePlayBack;
+	private ImageButton stopBtn;
+	private ImageButton playBack;
+	private ImageButton pausePlayBack;
 	private TextView timerValue;
 	private TextView timerValue2;
 	long timerLength;
@@ -101,7 +101,7 @@ public class RecordPoem extends Activity {
 		});
 
 
-		stopBtn = (Button) findViewById(R.id.stop);
+		stopBtn = (ImageButton) findViewById(R.id.stop);
 		stopBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -131,8 +131,8 @@ public class RecordPoem extends Activity {
 				timerValue2 = (TextView)v.findViewById(R.id.timerValue2);
 				
 				
-				pausePlayBack = (Button) v.findViewById(R.id.pauseButton);
-				playBack = (Button) v.findViewById(R.id.startButton);
+				pausePlayBack = (ImageButton) v.findViewById(R.id.pauseButton);
+				playBack = (ImageButton) v.findViewById(R.id.startButton);
 				playBack.setOnClickListener(
 						new View.OnClickListener() {
 							public void onClick(View v) {
