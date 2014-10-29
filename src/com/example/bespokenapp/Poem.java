@@ -48,20 +48,6 @@ public class Poem extends Activity implements ActionBar.TabListener{
 		myWebView.loadUrl(address);
 		myWebView.setWebViewClient(new WebViewClient()); 
 
-		swipeView = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);	 
-		swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-			@Override
-			public void onRefresh() {
-				swipeView.setRefreshing(true);
-				myWebView.reload();
-				( new Handler()).postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						swipeView.setRefreshing(false);
-					}
-				}, 3000);
-			}
-		});
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.

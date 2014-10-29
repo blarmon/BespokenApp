@@ -73,20 +73,6 @@ public class Profile extends Activity implements ActionBar.TabListener{
 			}
 		}); 
 
-		swipeView2 = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout2);	 
-		swipeView2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-			@Override
-			public void onRefresh() {
-				swipeView2.setRefreshing(true);
-				myWebView2.reload();
-				( new Handler()).postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						swipeView2.setRefreshing(false);
-					}
-				}, 3000);
-			}
-		});
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
