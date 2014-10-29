@@ -24,23 +24,23 @@
         </activity>
         <activity
             android:name=".RecordPoem"
-            android:label="@string/title_activity_record_poem" 
-            android:parentActivityName="com.example.bespokenapp.MainActivity" >
+            android:label="@string/title_activity_record_poem"
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
             android:name=".Profile"
             android:label="@string/title_activity_profile"
-            android:parentActivityName="com.example.bespokenapp.MainActivity" >
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
             android:name=".Poem"
             android:label="@string/title_activity_poem"
-            android:parentActivityName="com.example.bespokenapp.MainActivity" >
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
             android:name=".SearchPage"
             android:label="@string/title_activity_search_page"
-            android:parentActivityName="com.example.bespokenapp.MainActivity" >
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
             android:name=".Follow"
@@ -48,6 +48,10 @@
         </activity>
         <activity
             android:name=".Login"
+            android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".PreLogin"
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
