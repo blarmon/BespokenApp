@@ -8,19 +8,21 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/loginbackground" />
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_weight=".30"
+        android:background="#ffffff"
+        android:layout_width="230dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="139dp"
-        android:text="Button" 
-        android:onClick="goToLogin"/>
+        android:layout_marginBottom="189dp"
+        android:onClick="goToLogin"
+        android:text="Login with Google account"
+        android:textColor="#05084a" />
 
 </RelativeLayout>
