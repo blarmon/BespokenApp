@@ -74,7 +74,7 @@ public class Poem extends Activity implements ActionBar.TabListener{
 
 			List<String> temp = Uri.parse(url).getPathSegments();
 
-			if (temp.contains("user")) {
+			if (temp.contains("user") || temp.contains("my-profile")) {
 
 				goToProfilePage(url);
 				return true; //this ensures that the link isn't also opened in the parent activity.
