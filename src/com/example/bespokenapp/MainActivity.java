@@ -22,6 +22,7 @@ import android.os.StrictMode;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,8 +30,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.PopupWindow;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
@@ -50,7 +54,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 	static WebView myWebView1, myWebView2;
 	static String homepageHTML = "none";
-	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,17 +125,40 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	public void logOut(){
-		WebView myWebView = (WebView) findViewById(R.id.webview2);
-		myWebView.loadUrl("http://www.facebook.com/l.php?u=http%3A%2F%2Fbespokenapp.appspot.com%2F_ah%2Flogout%3Fcontinue%3Dhttps%253A%252F%252Fwww.google.com%252Faccounts%252FLogout%253Fcontinue%253Dhttps%253A%252F%252Fappengine.google.com%252F_ah%252Flogout%25253Fcontinue%25253Dhttp%253A%252F%252Fbespokenapp.appspot.com%252F%2526service%253Dah&h=lAQEcQGJW");
-		myWebView.setWebViewClient(new WebViewClient(){
-			public void onPageFinished(WebView view, String url) {
-				doneLoading();
-			}
-		});
+
+		LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+		View vw = layoutInflater.inflate(R.layout.logout_popup, null);
+		final PopupWindow popupWindow = new PopupWindow(vw, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+
+		popupWindow.showAtLocation(vw, Gravity.TOP, 0, 200);
+
+		Button logout = (Button) vw.findViewById(R.id.logout);
+		logout.setOnClickListener(
+				new View.OnClickListener() {
+					public void onClick(View v) {
+
+						WebView myWebView = (WebView) findViewById(R.id.webview2);
+						myWebView.loadUrl("http://www.facebook.com/l.php?u=http%3A%2F%2Fbespokenapp.appspot.com%2F_ah%2Flogout%3Fcontinue%3Dhttps%253A%252F%252Fwww.google.com%252Faccounts%252FLogout%253Fcontinue%253Dhttps%253A%252F%252Fappengine.google.com%252F_ah%252Flogout%25253Fcontinue%25253Dhttp%253A%252F%252Fbespokenapp.appspot.com%252F%2526service%253Dah&h=lAQEcQGJW");
+						myWebView.setWebViewClient(new WebViewClient(){
+							public void onPageFinished(WebView view, String url) {
+								doneLoading();
+							}
+						});
+
+					}
+				});
+
+		Button cancel = (Button) vw.findViewById(R.id.cancel);
+		cancel.setOnClickListener(
+				new View.OnClickListener() {
+					public void onClick(View v) {
+						popupWindow.dismiss();
+					}
+				});
 	}
-	
+
 	void doneLoading(){
 		Intent intent = new Intent(this, Login.class);
 		String loggedOut = "logged out";
@@ -144,7 +171,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		intent.putExtra("uniqueUser", ID);
 		startActivity(intent);
 	}
-	
+
 	public void goToSearchPage() {
 		Intent intent = new Intent(this, SearchPage.class);
 		startActivity(intent);
@@ -154,7 +181,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 	}
-	
+
 	public void goToProfilePage(String profileURL){
 		Intent intent = new Intent(this, Profile.class);
 		intent.putExtra("url", profileURL);
@@ -272,7 +299,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			myWebView1 = (WebView) rootView.findViewById(R.id.webview1);
 			myWebView1.loadUrl("http://bespokenapp.appspot.com");
 			myWebView1.setWebViewClient(new MyWebViewClient());
-			
+
 			swipeView3 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout3);	 
 			swipeView3.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 				@Override
@@ -290,7 +317,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 			return rootView;
 		}
-		
+
 		/*
 		 * This method gives us custom control over what happens with the links we click.
 		 * It's still problematic for going back to the main activity (it stays on the same page)
@@ -354,9 +381,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 			myWebView2.getSettings().setJavaScriptEnabled(true);  
 			myWebView2.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");  
-			
+
 			myWebView2.setWebViewClient(new MyWebViewClient());
-			
+
 			swipeView4 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout4);	 
 			swipeView4.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 				@Override
@@ -374,30 +401,30 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 			return rootView;
 		}
-		
+
 		/* An instance of this class will be registered as a JavaScript interface */
 		class MyJavaScriptInterface   
 		{  
-		    @SuppressWarnings("unused")  
-		    @android.webkit.JavascriptInterface
-		    public void getHTML(String html)  
-		    {  
-		        //Log.d("homepage html output", html); //'html' contains all of the html from the homepage.
-		        
-		        //go through the html file and pick out the unique user ID from the comments.  This is necessary to pass into 
-		        Scanner scanner = new Scanner(html);
-		        while (scanner.hasNextLine()) {
-		          String line = scanner.nextLine();
-		          if (line.contains("The current user uniqueUserID:")) {
-		        	  line = line.replaceAll("\\D+",""); //Thanks, StackOverflow!
-		        	  homepageHTML = line.trim(); //This is the uniqueUserID string.
-		        	  break;
-		          }
-		        }
-		        scanner.close();
-		    }  
+			@SuppressWarnings("unused")  
+			@android.webkit.JavascriptInterface
+			public void getHTML(String html)  
+			{  
+				//Log.d("homepage html output", html); //'html' contains all of the html from the homepage.
+
+				//go through the html file and pick out the unique user ID from the comments.  This is necessary to pass into 
+				Scanner scanner = new Scanner(html);
+				while (scanner.hasNextLine()) {
+					String line = scanner.nextLine();
+					if (line.contains("The current user uniqueUserID:")) {
+						line = line.replaceAll("\\D+",""); //Thanks, StackOverflow!
+						homepageHTML = line.trim(); //This is the uniqueUserID string.
+						break;
+					}
+				}
+				scanner.close();
+			}  
 		}
-		
+
 		/*
 		 * This method gives us custom control over what happens with the links we click.
 		 * It's still problematic for going back to the main activity (it stays on the same page)
@@ -421,7 +448,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 					return false;
 				}
 			}
-			
+
 			//This ought to get the HTML source from the webview.
 			@Override
 			public void onPageFinished(WebView view, String url) {
@@ -448,12 +475,12 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		// system behavior (probably exit the activity)
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	/* this is a dirty workaround that allows us to make http post requests */
 	public void enableStrictMode()
 	{
-	    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-	 
-	    StrictMode.setThreadPolicy(policy);
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+		StrictMode.setThreadPolicy(policy);
 	}
 }
