@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -46,7 +48,7 @@ public class Poem extends Activity implements ActionBar.TabListener{
 		final WebView myWebView;
 		myWebView = (WebView) findViewById(R.id.poemWebView);
 		myWebView.loadUrl(address);
-		myWebView.setWebViewClient(new WebViewClient()); 
+		myWebView.setWebViewClient(new CustomWebViewClient()); 
 
 
 		// Create the adapter that will return a fragment for each of the three
@@ -59,6 +61,34 @@ public class Poem extends Activity implements ActionBar.TabListener{
 		myViewPager.setAdapter(mSectionsPagerAdapter);
 
 
+	}
+	
+	//This is specifically for the link to the profile page to start in a new "profile" activity
+	public class CustomWebViewClient extends WebViewClient {
+
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+			//This determines whether the user has clicked on either a poem or profile page, 
+			//and then sends them to the appropriate activity.
+
+			List<String> temp = Uri.parse(url).getPathSegments();
+
+			if (temp.contains("user")) {
+
+				goToProfilePage(url);
+				return true; //this ensures that the link isn't also opened in the parent activity.
+			}
+
+			else {
+				return false;
+			}
+		}
+	}
+	public void goToProfilePage(String profileURL){
+		Intent intent = new Intent(this, Profile.class);
+		intent.putExtra("url", profileURL);
+		startActivity(intent);
 	}
 
 	@Override
@@ -371,7 +401,9 @@ public class Poem extends Activity implements ActionBar.TabListener{
 				List<String> temp = Uri.parse(url).getPathSegments();
 
 				if (temp.contains("user")) {
+					Log.d("went to profile page?", "after");
 					((MainActivity)getActivity()).goToProfilePage(url);
+					Log.d("went to profile page?", "after");
 					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 
