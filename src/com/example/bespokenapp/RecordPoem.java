@@ -55,18 +55,17 @@ public class RecordPoem extends Activity {
 	private MediaRecorder myRecorder;
 	private MediaPlayer myPlayer;
 	private String outputFile = null;
+	
 	private ImageButton startBtn;
 	private ImageButton stopBtn;
 	private ImageButton playBack;
 	private ImageButton pausePlayBack;
+	
 	private TextView timerValue;
 	private TextView timerValue2;
 	long timerLength;
-
 	private long startTime = 0L;
-
 	private Handler customHandler = new Handler();
-
 	long timeInMilliseconds = 0L;
 	long timeSwapBuff = 0L;
 	long updatedTime = 0L;
@@ -74,8 +73,6 @@ public class RecordPoem extends Activity {
 	long poemLength = 0L;
 	
 	String uniqueUserID;
-	//uniqueUserID = "blah!";
-	//Intent testIntent = getIntent();
 
 	String poemNameString = "[No Title]";
 	String poemTextString = "[No Text]";
@@ -89,18 +86,19 @@ public class RecordPoem extends Activity {
 		
 		timerValue = (TextView) findViewById(R.id.timerValue);
 		
-
+		//set the start button(picture of microphone) to start recording when pressed
 		startBtn = (ImageButton)findViewById(R.id.micImage);
 		startBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				start(v);//starts recording
+				//start the timer
 				startTime = SystemClock.uptimeMillis();
 				customHandler.postDelayed(updateTimerThread, 0);
 			}
 		});
 
-
+		//set the stop button to stop recording (and the timer) and open the playback popup
 		stopBtn = (ImageButton) findViewById(R.id.stop);
 		stopBtn.setOnClickListener(new OnClickListener() {
 
@@ -108,9 +106,7 @@ public class RecordPoem extends Activity {
 			public void onClick(View v) {
 				stop(v);//stops recording
 				
-				customHandler.removeCallbacks(updateTimerThread);
-				timerLength = timeInMilliseconds;
-				
+				customHandler.removeCallbacks(updateTimerThread);//stops the timer
 				
 				//then opens a popup window for playback
 				LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -119,63 +115,68 @@ public class RecordPoem extends Activity {
 
 				popupWindow.showAtLocation(v, Gravity.TOP, 0, 200);
 				
+				//edit texts for the user to enter the poem name and info
 				final EditText poemName = (EditText)v.findViewById(R.id.poemName);
 		        final EditText poemText = (EditText)v.findViewById(R.id.poemInfo);
 
+		        //make keyboard appear
 				popupWindow.setFocusable(true);
 				popupWindow.update();
 				poemName.requestFocus();
 				InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 				imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 				
+				//get hold of the timer in the playback window
 				timerValue2 = (TextView)v.findViewById(R.id.timerValue2);
 				
-				
+				//get hold of the play and pause buttons
 				pausePlayBack = (ImageButton) v.findViewById(R.id.pauseButton);
 				playBack = (ImageButton) v.findViewById(R.id.startButton);
+				//set play button to start playback
 				playBack.setOnClickListener(
 						new View.OnClickListener() {
 							public void onClick(View v) {
 								playback(v);//starts playback
-								playBack.setVisibility(8);
-								pausePlayBack.setVisibility(0);
-								customHandler.postDelayed(updateTimerThread2, 0);
+								playBack.setVisibility(8);//hides play button
+								pausePlayBack.setVisibility(0);//shows pause button
+								customHandler.postDelayed(updateTimerThread2, 0);//starts timer
 							}
 						});
 
-				
+				//set pause button to pause the playback
 				pausePlayBack.setOnClickListener(
 						new View.OnClickListener() {
 							public void onClick(View v) {
-								stopPlayback(v);//stops playback
-								pausePlayBack.setVisibility(8);
-								playBack.setVisibility(0);
-								//timeSwapBuff += timeInMilliseconds;
-								customHandler.removeCallbacks(updateTimerThread2);
+								pausePlayback(v);//pauses playback
+								pausePlayBack.setVisibility(8);//hides pause button
+								playBack.setVisibility(0);//shows play button
+								customHandler.removeCallbacks(updateTimerThread2);//stops timer
 							}
 						});
-
+				//set the delete button to close the popup window
 				final Button delete = (Button) v.findViewById(R.id.deleteButton);
 				delete.setOnClickListener(
 						new View.OnClickListener() {
-							public void onClick(View v) {//closes the popup window so that the user can record a new poem, which will overwrite their last recording
-								popupWindow.dismiss();
+							public void onClick(View v) {
+								popupWindow.dismiss();//closes the popup window so that the user can record a new poem, which will overwrite their last recording
+								//hide keyboard
 								InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 								imm.toggleSoftInput(InputMethodManager.RESULT_HIDDEN, 0);
-								startBtn.setVisibility(0);
-								stopBtn.setVisibility(8);
-								position=0;
-								timerValue.setText("00:00");
+								
+								startBtn.setVisibility(0);//show start button
+								stopBtn.setVisibility(8);//hide stop button
+								position=0;//reset the position to 0, so when the user opens the playback window again, the playback will start at the beginning
+								timerValue.setText("00:00");//reset timer value
 							}
 						});
-				
+				//set post button to post the user's recording
 				final Button postButton = (Button) v.findViewById(R.id.postButton);
 				postButton.setOnClickListener(
 						new View.OnClickListener() {
 														
 							@Override
 							public void onClick(View v) {
-								
+								//hide keyboard
 								InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 								imm.toggleSoftInput(InputMethodManager.RESULT_HIDDEN, 0);
 								
@@ -218,41 +219,6 @@ public class RecordPoem extends Activity {
 			                    
 								try {
 									enableStrictMode(); //this is necessary to let us post the request.
-									
-								    /*MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-								    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-								    //builder.addPart("file", new FileBody(new File(fileName)));
-								    builder.addTextBody("poem_name", "Testing poem_name from Android", ContentType.MULTIPART_FORM_DATA);
-								    builder.addTextBody("poem_text", "blah", ContentType.MULTIPART_FORM_DATA);
-								    //builder.addTextBody("nickname", "test from android", ContentType.MULTIPART_FORM_DATA);
-								    //postRequest.setEntity(builder.build());
-								    HttpResponse response = httpClient.execute(postRequest);
-									//HttpEntity theEntity = response.getEntity();
-								    //theEntity.consumeContent();
-								    
-								    String postResponseOutput = "Null   ";
-							        InputStream iStream = response.getEntity().getContent();
-							        BufferedReader reader = new BufferedReader(new InputStreamReader(iStream));
-				                    while ((the_upload_url = reader.readLine()) != null) {
-				                    	postResponseOutput += the_upload_url;
-				                    }
-				                    Log.d("HttpResponse Output", postResponseOutput);
-				                    
-				                    httpClient.getConnectionManager().shutdown();*/
-								    
-								    /* List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-							        nameValuePairs.add(new BasicNameValuePair("nickname", "test with NameValuePair"));
-							        postRequest.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-							        HttpResponse response = httpClient.execute(postRequest);
-							        Log.d("upload_url_new_place", upload_url);
-							        
-							        String postResponseOutput = "Null   ";
-							        InputStream iStream = response.getEntity().getContent();
-							        BufferedReader reader = new BufferedReader(new InputStreamReader(iStream));
-				                    while ((the_upload_url = reader.readLine()) != null) {
-				                    	postResponseOutput += the_upload_url;
-				                    }
-				                    Log.d("HttpResponse Output", postResponseOutput); */
 									
 							        poemNameString = poemName.getText().toString();
 							        if (poemNameString == null) {
@@ -302,36 +268,40 @@ public class RecordPoem extends Activity {
 		});
 	}
 	
+	//method for updating the timer on the record page - this was based off of a tutorial at http://examples.javacodegeeks.com/android/core/os/handler/android-timer-example/
 	private Runnable updateTimerThread = new Runnable() {
 		public void run() {
+			//get the number of milliseconds since the start button is pushed
 			timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
-
-			
-
+			//convert to minutes and seconds
 			int secs = (int) (timeInMilliseconds/1000);
 			int mins = secs/60;
 			secs = secs %60;
-
+			//display in the timer text view
 			timerValue.setText("" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
 			customHandler.postDelayed(this, 0);	
 		}
 	};
 
+	//method for updating the timer in the playback popup
 	private Runnable updateTimerThread2 = new Runnable() {
 		public void run() {
-
+			
+			//the getCurrentPosition() method will return the number of milliseconds the player is from the start of the recording;
+			//then convert this to minutes and seconds
 			int secs = (int) (myPlayer.getCurrentPosition()/1000);
 			int mins = secs/60;
 			secs = secs %60;
-
+			//display in the timer text view
 			timerValue2.setText("" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
 			customHandler.postDelayed(this, 0);	
+			//if the player reaches the end of the recording, stop the timer
 			if (!myPlayer.isPlaying()) {
 				customHandler.removeCallbacks(updateTimerThread2);
-				position = 0;
-				pausePlayBack.setVisibility(8);
-				playBack.setVisibility(0);
-				timerValue2.setText("00:00");
+				position = 0;//reset position
+				pausePlayBack.setVisibility(8);//hide pause button
+				playBack.setVisibility(0);//show play button
+				timerValue2.setText("00:00");//reset timer
 			}
 
 		}
@@ -381,7 +351,7 @@ public class RecordPoem extends Activity {
 			myPlayer = new MediaPlayer();
 			myPlayer.setDataSource(outputFile);
 			myPlayer.prepare();
-			myPlayer.seekTo(position);
+			myPlayer.seekTo(position);//start from whatever the position is; if the user has paused, the player will pick up where they left off
 			myPlayer.start();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -389,11 +359,11 @@ public class RecordPoem extends Activity {
 
 	}
 
-	public void stopPlayback(View view) {//stops playback
+	public void pausePlayback(View view) {//stops playback
 		try {
 			if (myPlayer != null) {
 				myPlayer.stop();
-				position = myPlayer.getCurrentPosition();
+				position = myPlayer.getCurrentPosition();//set position to where ever the user paused
 				myPlayer.release();
 				myPlayer = null;
 
