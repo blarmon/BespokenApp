@@ -52,6 +52,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	 */
 	ViewPager mViewPager;
 
+	//two webviews for two tabs
 	static WebView myWebView1, myWebView2;
 	static String homepageHTML = "none";
 
@@ -101,13 +102,14 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
+		//get our custom action bar menu
 		inflater.inflate(R.menu.main_activity_actions, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
+		// Handle presses on the action bar items, fairly self-explanatory
 		switch (item.getItemId()) {
 		case R.id.profile:
 			goToProfilePage("http://bespokenapp.appspot.com/my-profile");
@@ -126,8 +128,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		}
 	}
 
+	//when logout is pressed from the action bar
 	public void logOut(){
-
+		
+		//create a popup, inflate it into a view.  this is a check to make sure they want to log out
 		LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 		View vw = layoutInflater.inflate(R.layout.logout_popup, null);
 		final PopupWindow popupWindow = new PopupWindow(vw, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -139,9 +143,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 				new View.OnClickListener() {
 					public void onClick(View v) {
 
+						//loading this URL logs you out of out app
 						WebView myWebView = (WebView) findViewById(R.id.webview2);
 						myWebView.loadUrl("http://www.facebook.com/l.php?u=http%3A%2F%2Fbespokenapp.appspot.com%2F_ah%2Flogout%3Fcontinue%3Dhttps%253A%252F%252Fwww.google.com%252Faccounts%252FLogout%253Fcontinue%253Dhttps%253A%252F%252Fappengine.google.com%252F_ah%252Flogout%25253Fcontinue%25253Dhttp%253A%252F%252Fbespokenapp.appspot.com%252F%2526service%253Dah&h=lAQEcQGJW");
 						myWebView.setWebViewClient(new WebViewClient(){
+							call doneloading() up finishing the logout page
 							public void onPageFinished(WebView view, String url) {
 								doneLoading();
 							}
@@ -158,35 +164,44 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 					}
 				});
 	}
-
+	
+	
 	void doneLoading(){
+		//start up the login page again.  the extra was going to be a way to check if we came from mainactivity or prelogin, which is important
+		//ended up with a bunch of null pointer exceptions that i didnt have time to fix, so ultimately the extra string is useless for now
 		Intent intent = new Intent(this, Login.class);
 		String loggedOut = "logged out";
 		intent.putExtra("loggedOut", loggedOut);
 		startActivity(intent);
 	}
-
+	
+	//start up the record page, pass the googleuserID
 	public void goToRecordPage(String ID){
 		Intent intent = new Intent(this, RecordPoem.class);
 		intent.putExtra("uniqueUser", ID);
 		startActivity(intent);
 	}
 
+	//start up the search page
 	public void goToSearchPage() {
 		Intent intent = new Intent(this, SearchPage.class);
 		startActivity(intent);
 	}
 
+	//wasn't used
 	public void goToHomePage(){
 		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 	}
 
+	//go to your own profile
 	public void goToProfilePage(String profileURL){
 		Intent intent = new Intent(this, Profile.class);
 		intent.putExtra("url", profileURL);
 		startActivity(intent);
 	}
+	
+	//go to the page of a pecific poem
 	public void goToPoemPage(String poemURL){
 		Intent intent = new Intent(this, Poem.class);
 		intent.putExtra("url", poemURL);
@@ -266,7 +281,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	}
 
 	/**
-	 * A placeholder fragment containing a simple view.
+	 * PlaceholderFragments are our fragments containing tabs, android created these and we never bothered to rename them
 	 */
 	public static class PlaceholderFragment extends Fragment {
 		/**
@@ -296,10 +311,13 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			View rootView = inflater.inflate(R.layout.mypoems, container,
 					false);
 
+
+			//this is the URL for a top-feed
 			myWebView1 = (WebView) rootView.findViewById(R.id.webview1);
 			myWebView1.loadUrl("http://bespokenapp.appspot.com");
 			myWebView1.setWebViewClient(new MyWebViewClient());
 
+			//set the tabs up to swipe up on refresh
 			swipeView3 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout3);	 
 			swipeView3.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 				@Override
@@ -346,7 +364,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 
 	/**
-	 * A second placeholder fragment containing a simple view.
+	 * operates exactly like the first with a diferent URL being loaded
 	 */
 	public static class PlaceholderFragment2 extends Fragment {
 		/**
@@ -427,7 +445,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 		/*
 		 * This method gives us custom control over what happens with the links we click.
-		 * It's still problematic for going back to the main activity (it stays on the same page)
 		 */
 		private class MyWebViewClient extends WebViewClient {
 			@Override
