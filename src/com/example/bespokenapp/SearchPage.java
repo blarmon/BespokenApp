@@ -24,6 +24,9 @@ public class SearchPage extends Activity {
 		setContentView(R.layout.activity_search_page);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		WebView myWebView;
+		
+		//this loads the webview containing the search page.  this is pretty much the only valuable information here.
+		
 		myWebView = (WebView) findViewById(R.id.profileWebViewSearch);
 		myWebView.loadUrl("http://bespokenapp.appspot.com/search");
 		myWebView.setWebViewClient(new MyWebViewClient());
