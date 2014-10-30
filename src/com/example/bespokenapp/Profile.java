@@ -525,8 +525,8 @@ public class Profile extends Activity implements ActionBar.TabListener{
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-		// Check if the key event was the Back button and if we came here through the "/my-profile" link
-		if ((keyCode == KeyEvent.KEYCODE_BACK) && ((String)myWebView.getUrl()).contains("me")) {
+		// Check if the key event was the Back button
+		if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 			//because of weird things happening with "/my-profile", force the activity to exit when clicking back.
 			NavUtils.navigateUpFromSameTask(this); 
 			return true;
