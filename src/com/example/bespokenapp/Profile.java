@@ -299,12 +299,12 @@ public class Profile extends Activity implements ActionBar.TabListener{
 
 				if (temp.contains("user")) {
 
-					((MainActivity)getActivity()).goToProfilePage(url);
+					((Profile)getActivity()).goToProfilePage(url);
 					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 
 				else if (temp.contains("poem")) {
-					((MainActivity)getActivity()).goToPoemPage(url);
+					((Profile)getActivity()).goToPoemPage(url);
 					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 
@@ -393,13 +393,13 @@ public class Profile extends Activity implements ActionBar.TabListener{
 				List<String> temp = Uri.parse(url).getPathSegments();
 
 				if (temp.contains("user")) {
-					((MainActivity)getActivity()).goToProfilePage(url);
+					((Profile)getActivity()).goToProfilePage(url);
 					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 
 				else if (temp.contains("poem")) {
 
-					((MainActivity)getActivity()).goToPoemPage(url);
+					((Profile)getActivity()).goToPoemPage(url);
 					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 
@@ -487,13 +487,13 @@ public class Profile extends Activity implements ActionBar.TabListener{
 				List<String> temp = Uri.parse(url).getPathSegments();
 
 				if (temp.contains("user")) {
-					((MainActivity)getActivity()).goToProfilePage(url);
+					((Profile)getActivity()).goToProfilePage(url);
 					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 
 				else if (temp.contains("poem")) {
 
-					((MainActivity)getActivity()).goToPoemPage(url);
+					((Profile)getActivity()).goToPoemPage(url);
 					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 

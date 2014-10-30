@@ -277,15 +277,11 @@ public class Poem extends Activity implements ActionBar.TabListener{
 
 				if (temp.contains("user")) {
 
-					((MainActivity)getActivity()).goToProfilePage(url);
+					((Poem)getActivity()).goToProfilePage(url);
 					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 
-				else if (temp.contains("poem")) {
-					((MainActivity)getActivity()).goToPoemPage(url);
-					return true; //this ensures that the link isn't also opened in the parent activity.
-				}
-
+				
 				else {
 					return false;
 				}
@@ -372,14 +368,8 @@ public class Poem extends Activity implements ActionBar.TabListener{
 
 				if (temp.contains("user")) {
 					Log.d("went to profile page?", "after");
-					((MainActivity)getActivity()).goToProfilePage(url);
+					((Poem)getActivity()).goToProfilePage(url);
 					Log.d("went to profile page?", "after");
-					return true; //this ensures that the link isn't also opened in the parent activity.
-				}
-
-				else if (temp.contains("poem")) {
-					
-					((MainActivity)getActivity()).goToPoemPage(url);
 					return true; //this ensures that the link isn't also opened in the parent activity.
 				}
 
