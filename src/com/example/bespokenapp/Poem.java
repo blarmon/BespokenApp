@@ -43,10 +43,15 @@ public class Poem extends Activity implements ActionBar.TabListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_poem);
+		
+		//this gives us an 'up' button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		//get the url passed in in MainActivity
 		String address = getIntent().getExtras().getString("url");
 		poemAddress = address;
 		final WebView myWebView;
+		
+		//load upour webview to display the peom page
 		myWebView = (WebView) findViewById(R.id.poemWebView);
 		myWebView.loadUrl(address);
 		myWebView.setWebViewClient(new CustomWebViewClient()); 
@@ -104,6 +109,7 @@ public class Poem extends Activity implements ActionBar.TabListener{
 
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
+			//id.home is set by android for use as the 'up' button.  MainActivity is set as the parent class in the manifest
 		case android.R.id.home:
             NavUtils.navigateUpFromSameTask(this);
             return true;
@@ -115,7 +121,7 @@ public class Poem extends Activity implements ActionBar.TabListener{
 	}
 
 	public void trashClicked(){
-		//here
+		//not used
 	}
 
 	@Override
