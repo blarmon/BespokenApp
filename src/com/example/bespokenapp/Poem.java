@@ -12,6 +12,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,7 +50,7 @@ public class Poem extends Activity implements ActionBar.TabListener{
 		myWebView = (WebView) findViewById(R.id.poemWebView);
 		myWebView.loadUrl(address);
 		myWebView.setWebViewClient(new CustomWebViewClient()); 
-
+		myWebView.setBackgroundColor(Color.parseColor("#7fcfd6"));//set the background color of the webview to light blue
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.

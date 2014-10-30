@@ -13,6 +13,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,6 +49,7 @@ public class Profile extends Activity implements ActionBar.TabListener{
 		final WebView myWebView2;
 		myWebView2 = (WebView) findViewById(R.id.profileWebView);
 		myWebView2.loadUrl(address2);
+		myWebView2.setBackgroundColor(Color.parseColor("#7fcfd6"));//set the background color of the webview to light blue
 		myWebView2.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
