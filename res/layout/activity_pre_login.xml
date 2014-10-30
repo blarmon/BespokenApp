@@ -4,15 +4,15 @@
     android:layout_height="match_parent"
     android:background="#05084a"
     tools:context="com.example.bespokenapp.PreLogin" >
-
+  
     <ImageView
+      android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
          android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/loginbackground" />
-
+        android:src="@drawable/prelogin" />
     <Button
         android:id="@+id/button1"
         android:background="#ffffff"
@@ -22,7 +22,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="189dp"
         android:onClick="goToLogin"
-        android:text="Login with Google account"
+        android:text="Use Google Account"
         android:textColor="#05084a" />
-
 </RelativeLayout>
