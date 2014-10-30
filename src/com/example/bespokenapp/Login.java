@@ -15,14 +15,17 @@ public class Login extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
+		//create a webview, any webview that loads a google appspot page will take you to a login screen if you are not currently logged in
 		WebView myWebView;
 		myWebView = (WebView) findViewById(R.id.profileWebViewLogin);
 		myWebView.loadUrl("http://bespokenapp.appspot.com");
 		boolean test = false;
 
 		myWebView.setWebViewClient(new WebViewClient(){
+			//does something when a page is finished loading
 			public void onPageFinished(WebView view, String url) {
 
+				//the login page contains servicelogin, we parse that url, if we're not on the login screen we start up mainactivity
 				if (!url.contains("ServiceLogin"))
 				{
 					doneLoading();
@@ -34,8 +37,11 @@ public class Login extends Activity {
 	}
 
 	void doneLoading(){
+		//restart the activity and take it off the stack.  this sucks but I was running out of time, and I can't let you press back to go back on the login screen
 		finish();
 		startActivity(getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+		
+		//start up our feed page with no animation, it looks smoother, especially if they are already logged in and we are bypassing login
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		startActivity(intent);
