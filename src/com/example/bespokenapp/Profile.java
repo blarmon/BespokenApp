@@ -119,12 +119,14 @@ public class Profile extends Activity implements ActionBar.TabListener{
 		}
 	}
 
+
 	public void goToRecordPage(){
 		Intent intent = new Intent(this, RecordPoem.class);
 		startActivity(intent);
 	}
 
 	public void goToFollow() {
+		//not used
 		Intent intent = new Intent(this, Follow.class);
 		startActivity(intent);
 	}
@@ -135,6 +137,7 @@ public class Profile extends Activity implements ActionBar.TabListener{
 	}
 
 	public void goToHomePage(){
+		//not used
 		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 	}
