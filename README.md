@@ -1,3 +1,6 @@
 BespokenApp README
 ===========
-This readme file will be filled in as the app gets closer to completion.  For the prototype, we have implemented an app that navigates from a tabbed main activity to individual poem and profile pages, as well as the skeleton for the record page.  All of it is built on top of a python backend (to be git-ed shortly).  None of it looks pretty (yet).
+bespoken provides a platform for spoken word poets to collaborate and share their work.  
+
+Alex Peterson: The social networking features are powered by a separate backend, seen here:  https://github.com/PeteStreet/bespoken-backend
+I focused the majority of my efforts on building the backend of the app, which is explained in more detail on its own readm.  My work also entailed setting up WebViews which display the contents of the backend, as well as wrestling with calling GET and POST request from Android in order to make the uploading/streaming function.  As of now, streaming only works on a few Android devices (the webviews with poem recordings contain an HTML5 <audio> tag).  
