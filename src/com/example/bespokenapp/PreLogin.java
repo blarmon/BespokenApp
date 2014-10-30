@@ -1,3 +1,7 @@
+//This page load up the page before the actual login page.  It's just a nice image and a button that says 'login with google'
+//it takes you to login, which will take you to main activity automatically if you're logged in already
+
+
 package com.example.bespokenapp;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -19,12 +23,14 @@ public class PreLogin extends Activity {
 		ActionBar actionBar = getActionBar();
 		actionBar.hide();
 		
+		//get the height and width of the screen for any device
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
 		
+		//set height and width of imageview to that height and width
 		ImageView image = (ImageView) findViewById(R.id.image);
 		image.getLayoutParams().height = height;
 		image.getLayoutParams().width = width;
@@ -38,6 +44,7 @@ public class PreLogin extends Activity {
 		return true;
 	}
 	
+	//called on button press, goes to login page (declaredn in xml file).  deletes prelogin from the stack and gets rid of animation between activities via flags
 	public void goToLogin(View view) {
 		finish();
 		Intent intent = getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
