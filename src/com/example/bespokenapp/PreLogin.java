@@ -39,8 +39,11 @@ public class PreLogin extends Activity {
 	}
 	
 	public void goToLogin(View view) {
-		Intent intent = new Intent(this, Login.class);
-		startActivity(intent);
+		finish();
+		Intent intent = getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		startActivity(getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+		Intent intent1 = new Intent(this, Login.class);
+		startActivity(intent1);
 	 }
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
