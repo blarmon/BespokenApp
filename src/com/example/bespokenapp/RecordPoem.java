@@ -110,7 +110,7 @@ public class RecordPoem extends Activity {
 				
 				customHandler.removeCallbacks(updateTimerThread);
 				timerLength = timeInMilliseconds;
-				timerValue.setText("00:00");
+				
 				
 				//then opens a popup window for playback
 				LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -139,7 +139,6 @@ public class RecordPoem extends Activity {
 								playback(v);//starts playback
 								playBack.setVisibility(8);
 								pausePlayBack.setVisibility(0);
-								startTime = SystemClock.uptimeMillis();
 								customHandler.postDelayed(updateTimerThread2, 0);
 							}
 						});
@@ -151,7 +150,7 @@ public class RecordPoem extends Activity {
 								stopPlayback(v);//stops playback
 								pausePlayBack.setVisibility(8);
 								playBack.setVisibility(0);
-								timeSwapBuff += timeInMilliseconds;
+								//timeSwapBuff += timeInMilliseconds;
 								customHandler.removeCallbacks(updateTimerThread2);
 							}
 						});
@@ -165,9 +164,8 @@ public class RecordPoem extends Activity {
 								imm.toggleSoftInput(InputMethodManager.RESULT_HIDDEN, 0);
 								startBtn.setVisibility(0);
 								stopBtn.setVisibility(8);
-								timeSwapBuff=0;
 								position=0;
-
+								timerValue.setText("00:00:00");
 							}
 						});
 				
@@ -312,33 +310,32 @@ public class RecordPoem extends Activity {
 
 			int secs = (int) (timeInMilliseconds/1000);
 			int mins = secs/60;
+			int hours = mins/60;
+			mins = mins%60;
 			secs = secs %60;
 
-			timerValue.setText("" + mins + ":" + String.format("%02d", secs));
+			timerValue.setText("" + String.format("%02d", hours) + ":" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
 			customHandler.postDelayed(this, 0);	
 		}
 	};
 
 	private Runnable updateTimerThread2 = new Runnable() {
 		public void run() {
-			timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
 
-
-			updatedTime = timeSwapBuff + timeInMilliseconds;
-
-			int secs = (int) (updatedTime/1000);
+			int secs = (int) (myPlayer.getCurrentPosition()/1000);
 			int mins = secs/60;
+			int hours = mins/60;
+			mins = mins%60;
 			secs = secs %60;
 
-			timerValue2.setText("" + mins + ":" + String.format("%02d", secs));
+			timerValue2.setText("" + String.format("%02d", hours) + ":" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
 			customHandler.postDelayed(this, 0);	
 			if (!myPlayer.isPlaying()) {
 				customHandler.removeCallbacks(updateTimerThread2);
 				position = 0;
 				pausePlayBack.setVisibility(8);
 				playBack.setVisibility(0);
-				timerValue2.setText("00:00");
-				updatedTime = 0;
+				timerValue2.setText("00:00:00");
 			}
 
 		}
