@@ -1,6 +1,5 @@
 /*
- * name: Lauren Naylor
- * This is the page the user will use to record their poetry - right now the post button is not functional
+ * This is the page the user will use to record their poetry and post it to the server
  */
 
 package com.example.bespokenapp;

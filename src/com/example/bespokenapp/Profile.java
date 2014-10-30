@@ -30,10 +30,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 
-
-
-
-
 public class Profile extends Activity implements ActionBar.TabListener{
 
 	private SwipeRefreshLayout swipeView2;
@@ -155,21 +151,15 @@ public class Profile extends Activity implements ActionBar.TabListener{
 		myViewPager.setCurrentItem(tab.getPosition());
 	}
 
-
-
 	@Override
 	public void onTabUnselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
 	}
 
-
-
 	@Override
 	public void onTabReselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
 	}
-
-
 
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -177,13 +167,9 @@ public class Profile extends Activity implements ActionBar.TabListener{
 	 */
 
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
-
 		}
-
-
 
 		@Override
 		public Fragment getItem(int position) {
@@ -204,15 +190,11 @@ public class Profile extends Activity implements ActionBar.TabListener{
 			}
 		}
 
-
-
 		@Override
 		public int getCount() {
 			// Show 2 total pages.
 			return 3;
 		}
-
-
 
 		@Override
 		public CharSequence getPageTitle(int position) {
@@ -235,8 +217,6 @@ public class Profile extends Activity implements ActionBar.TabListener{
 			return null;
 		}
 	}
-
-
 
 	/**
 	 * A placeholder fragment containing a simple view.
@@ -282,10 +262,9 @@ public class Profile extends Activity implements ActionBar.TabListener{
 			myWebView1.loadUrl(profileAddress + "/poems");
 			myWebView1.setWebViewClient(new MyWebViewClient());
 
+			//allows user to pull down to refresh the page
 			swipeView3 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout3);	 
-
 			swipeView3.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
 				@Override
 				public void onRefresh() {
 					swipeView3.setRefreshing(true);
@@ -300,8 +279,6 @@ public class Profile extends Activity implements ActionBar.TabListener{
 			});
 			return rootView;
 		}
-
-
 
 		/*
 		 * This method gives us custom control over what happens with the links we click.
@@ -350,8 +327,6 @@ public class Profile extends Activity implements ActionBar.TabListener{
 		SwipeRefreshLayout swipeView4;
 		private static final String ARG_SECTION_NUMBER = "section_number";
 
-
-
 		/**
 		 * Returns a new instance of this fragment for the given section number.
 		 */
@@ -363,10 +338,7 @@ public class Profile extends Activity implements ActionBar.TabListener{
 			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 			fragment.setArguments(args);
 			return fragment;
-
 		}
-
-
 
 		public PlaceholderFragment4() {
 		}
@@ -378,22 +350,18 @@ public class Profile extends Activity implements ActionBar.TabListener{
 			View rootView = inflater.inflate(R.layout.mypoems2, container,
 					false);
 
-
-
 			myWebView2 = (WebView) rootView.findViewById(R.id.webview2);
 			myWebView2.loadUrl(profileAddress + "/followers");
 			myWebView2.setWebViewClient(new MyWebViewClient());
-
+			
+			//allows the user to pull down to refresh the page
 			swipeView4 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout4);	 
 			swipeView4.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
 				@Override
 				public void onRefresh() {
-
 					swipeView4.setRefreshing(true);
 					myWebView2.reload();
 					( new Handler()).postDelayed(new Runnable() {
-
 						@Override
 						public void run() {
 							swipeView4.setRefreshing(false);
@@ -468,8 +436,6 @@ public class Profile extends Activity implements ActionBar.TabListener{
 
 		}
 
-
-
 		public PlaceholderFragment5() {
 		}
 
@@ -480,22 +446,18 @@ public class Profile extends Activity implements ActionBar.TabListener{
 			View rootView = inflater.inflate(R.layout.mypoems2, container,
 					false);
 
-
-
 			myWebView2 = (WebView) rootView.findViewById(R.id.webview2);
 			myWebView2.loadUrl(profileAddress + "/following");
 			myWebView2.setWebViewClient(new MyWebViewClient());
 
+			//allows the user to pull down to refresh the page
 			swipeView5 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout4);	 
 			swipeView5.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
 				@Override
 				public void onRefresh() {
-
 					swipeView5.setRefreshing(true);
 					myWebView2.reload();
 					( new Handler()).postDelayed(new Runnable() {
-
 						@Override
 						public void run() {
 							swipeView5.setRefreshing(false);
@@ -506,8 +468,6 @@ public class Profile extends Activity implements ActionBar.TabListener{
 
 			return rootView;
 		}
-
-
 
 		/*
 		 * This method gives us custom control over what happens with the links we click.
