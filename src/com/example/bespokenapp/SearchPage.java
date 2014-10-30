@@ -4,13 +4,17 @@
 
 package com.example.bespokenapp;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class SearchPage extends Activity {
 
@@ -22,6 +26,7 @@ public class SearchPage extends Activity {
 		WebView myWebView;
 		myWebView = (WebView) findViewById(R.id.profileWebViewSearch);
 		myWebView.loadUrl("http://bespokenapp.appspot.com/search");
+		myWebView.setWebViewClient(new MyWebViewClient());
 	}
 
 	@Override
@@ -75,5 +80,32 @@ public class SearchPage extends Activity {
 		Intent intent = new Intent(this, Poem.class);
 		intent.putExtra("url", poemURL);
 		startActivity(intent);
+	}
+	
+	public class MyWebViewClient extends WebViewClient {
+
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+			//This determines whether the user has clicked on either a poem or profile page, 
+			//and then sends them to the appropriate activity.
+
+			List<String> temp = Uri.parse(url).getPathSegments();
+
+			if (temp.contains("user")) {
+
+				goToProfilePage(url);
+				return true; //this ensures that the link isn't also opened in the parent activity.
+			}
+
+			else if (temp.contains("poem")) {
+				goToPoemPage(url);
+				return true; //this ensures that the link isn't also opened in the parent activity.
+			}
+
+			else {
+				return false;
+			}
+		}
 	}
 }
