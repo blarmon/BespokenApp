@@ -1,11 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <!-- Search, should appear as action button -->
        <item android:id="@+id/record"
-          android:icon="@drawable/microphone21"
+          android:icon="@drawable/mic"
           android:title="record"
           android:showAsAction="always" />
        <item android:id="@+id/search"
-          android:icon="@drawable/search7"
+          android:icon="@drawable/search"
           android:title="search"
           android:showAsAction="always" />
     <item android:id="@+id/profile"
