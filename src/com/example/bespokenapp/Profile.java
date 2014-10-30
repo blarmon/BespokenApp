@@ -21,6 +21,7 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,7 +37,7 @@ public class Profile extends Activity implements ActionBar.TabListener{
 	private SwipeRefreshLayout swipeView2;
 	ViewPager myViewPager;
 	SectionsPagerAdapter mySectionsPagerAdapter;
-	static WebView myWebView1, myWebView2;
+	static WebView myWebView, myWebView1, myWebView2, myWebView3;
 	static String profileAddress = "";
 
 	@Override
@@ -46,11 +47,18 @@ public class Profile extends Activity implements ActionBar.TabListener{
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		String address2 = getIntent().getExtras().getString("url");
 		profileAddress = address2;
+		//for some reason, when going through the "/my-profile" link it's appending "/followers" to the end of the url
+		if (profileAddress.contains("followers")) {
+			profileAddress = profileAddress.replace("/followers", "");
+		}
 		final WebView myWebView2;
-		myWebView2 = (WebView) findViewById(R.id.profileWebView);
-		myWebView2.loadUrl(address2);
-		myWebView2.setBackgroundColor(Color.parseColor("#7fcfd6"));//set the background color of the webview to light blue
-		myWebView2.setWebViewClient(new WebViewClient() {
+		myWebView = (WebView) findViewById(R.id.profileWebView);
+		myWebView.loadUrl(profileAddress);
+		
+		Log.d("address myWebView", profileAddress);
+		
+		myWebView.setBackgroundColor(Color.parseColor("#7fcfd6"));//set the background color of the webview to light blue
+		myWebView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
@@ -263,6 +271,8 @@ public class Profile extends Activity implements ActionBar.TabListener{
 			myWebView1 = (WebView) rootView.findViewById(R.id.webview1);
 			myWebView1.loadUrl(profileAddress + "/poems");
 			myWebView1.setWebViewClient(new MyWebViewClient());
+			
+			Log.d("address myWebView1", profileAddress);
 
 			//allows user to pull down to refresh the page
 			swipeView3 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout3);	 
@@ -355,6 +365,8 @@ public class Profile extends Activity implements ActionBar.TabListener{
 			myWebView2 = (WebView) rootView.findViewById(R.id.webview2);
 			myWebView2.loadUrl(profileAddress + "/followers");
 			myWebView2.setWebViewClient(new MyWebViewClient());
+
+			Log.d("address myWebView2", profileAddress);
 			
 			//allows the user to pull down to refresh the page
 			swipeView4 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout4);	 
@@ -448,9 +460,11 @@ public class Profile extends Activity implements ActionBar.TabListener{
 			View rootView = inflater.inflate(R.layout.mypoems2, container,
 					false);
 
-			myWebView2 = (WebView) rootView.findViewById(R.id.webview2);
-			myWebView2.loadUrl(profileAddress + "/following");
-			myWebView2.setWebViewClient(new MyWebViewClient());
+			myWebView3 = (WebView) rootView.findViewById(R.id.webview2);
+			myWebView3.loadUrl(profileAddress + "/following");
+			myWebView3.setWebViewClient(new MyWebViewClient());
+			
+			Log.d("address myWebView2", profileAddress);
 
 			//allows the user to pull down to refresh the page
 			swipeView5 = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout4);	 
@@ -458,7 +472,7 @@ public class Profile extends Activity implements ActionBar.TabListener{
 				@Override
 				public void onRefresh() {
 					swipeView5.setRefreshing(true);
-					myWebView2.reload();
+					myWebView3.reload();
 					( new Handler()).postDelayed(new Runnable() {
 						@Override
 						public void run() {
@@ -511,14 +525,10 @@ public class Profile extends Activity implements ActionBar.TabListener{
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-		// Check if the key event was the Back button and if there's history
-		if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView1.canGoBack()) {
-			myWebView1.goBack();
-			return true;
-		}
-
-		else if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView2.canGoBack()) {
-			myWebView2.goBack();
+		// Check if the key event was the Back button and if we came here through the "/my-profile" link
+		if ((keyCode == KeyEvent.KEYCODE_BACK) && ((String)myWebView.getUrl()).contains("me")) {
+			//because of weird things happening with "/my-profile", force the activity to exit when clicking back.
+			NavUtils.navigateUpFromSameTask(this); 
 			return true;
 		}
 
