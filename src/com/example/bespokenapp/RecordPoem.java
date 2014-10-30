@@ -165,7 +165,7 @@ public class RecordPoem extends Activity {
 								startBtn.setVisibility(0);
 								stopBtn.setVisibility(8);
 								position=0;
-								timerValue.setText("00:00:00");
+								timerValue.setText("00:00");
 							}
 						});
 				
@@ -310,11 +310,9 @@ public class RecordPoem extends Activity {
 
 			int secs = (int) (timeInMilliseconds/1000);
 			int mins = secs/60;
-			int hours = mins/60;
-			mins = mins%60;
 			secs = secs %60;
 
-			timerValue.setText("" + String.format("%02d", hours) + ":" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
+			timerValue.setText("" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
 			customHandler.postDelayed(this, 0);	
 		}
 	};
@@ -324,18 +322,16 @@ public class RecordPoem extends Activity {
 
 			int secs = (int) (myPlayer.getCurrentPosition()/1000);
 			int mins = secs/60;
-			int hours = mins/60;
-			mins = mins%60;
 			secs = secs %60;
 
-			timerValue2.setText("" + String.format("%02d", hours) + ":" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
+			timerValue2.setText("" + String.format("%02d", mins) + ":" + String.format("%02d", secs));
 			customHandler.postDelayed(this, 0);	
 			if (!myPlayer.isPlaying()) {
 				customHandler.removeCallbacks(updateTimerThread2);
 				position = 0;
 				pausePlayBack.setVisibility(8);
 				playBack.setVisibility(0);
-				timerValue2.setText("00:00:00");
+				timerValue2.setText("00:00");
 			}
 
 		}
